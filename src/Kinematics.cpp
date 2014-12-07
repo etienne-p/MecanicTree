@@ -13,13 +13,16 @@ namespace Kinematic {
     Chain::Chain(){
         
         base.set(200.f, 200.f);
-        dJoint = .05f;
+        dJoint = .1f;
         
+        float r = 100.f;
+        float d = 0.4;
         elements.clear();
-        for (int i = 0; i < 30; i++){
+        for (int i = 0; i < 8; i++){
             ChainElement elt;
             elt.joint = 0;
-            elt.link = 20.f;
+            r *= .8f;
+            elt.link = r;
             elements.push_back(elt);
         }
         
@@ -30,24 +33,12 @@ namespace Kinematic {
         cartesianPoints.resize(elements.size() + 1);
         updateCartesianPoints();
         elementIndex = elements.size() - 1;
-        jointDelta = evalJointDelta();
-        error = FLT_MAX; // ~Infinity
     };
     
     void Chain::update(){
-        
-        elements[elementIndex].joint += jointDelta;
-        
+        elements[elementIndex].joint += evalJointDelta();
         updateCartesianPoints();
-        
-        float new_error = target.distance(cartesianPoints.back());
-    
-        //if (new_error > error){
-            elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
-            jointDelta = evalJointDelta();
-       // }
-        
-        error = new_error;
+        elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
     };
     
     void Chain::draw(){

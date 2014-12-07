@@ -16,7 +16,6 @@ namespace Kinematic {
 struct ChainElement {
     float link;
     float joint;
-    // TODO: add DOF
 };
 
 class Chain {
@@ -30,9 +29,7 @@ public:
     float dJoint;
     
     // state
-    float error;
     int elementIndex;
-    float jointDelta;
     
     Chain();
     
@@ -43,7 +40,7 @@ public:
     void draw();
     
 private:
-    
+        
     vector<ofVec2f> cartesianPoints;
     
     float evalAngleToTarget();
