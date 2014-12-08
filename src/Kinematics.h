@@ -27,35 +27,27 @@ public:
     ofVec2f base;
     ofVec2f target;
     vector<ChainElement> elements;
-   
     float dJoint;
+    
+    Chain();
+    void update();
+    void reset();
+    void draw();
     
     // state
     int elementIndex;
     
-    Chain();
-    
-    void update();
-    
-    void reset();
-    
-    void draw();
-    
 private:
-    
-    
-    float error;
-    
-    int updatesForCurrentIndex;
-    
+
     vector<ofVec2f> cartesianPoints;
     
     float evalAngleToTarget();
-    
     float evalJointDelta();
-    
     void updateCartesianPoints();
- 
+    
+    // state
+    float error;
+    int updatesForCurrentIndex;
 };
     
 }

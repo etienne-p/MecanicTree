@@ -48,6 +48,7 @@
 		DF0C851B244C4C867CEA8806 /* ofxUICircleSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2556100026B425E8370BCF75 /* ofxUICircleSlider.cpp */; };
 		E3A1109F67D711D6C256031E /* ofxUIToggleMatrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 702A2528CA64B397E9B91ABE /* ofxUIToggleMatrix.cpp */; };
 		E3D59A6B55F05669B3FBF8BD /* ofxUINumberDialer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0D6768C572B6CA49227C29EA /* ofxUINumberDialer.cpp */; };
+		E409B2AD1A36621900F6D821 /* Tree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E409B2AB1A36621900F6D821 /* Tree.cpp */; };
 		E4328149138ABC9F0047C5CB /* openFrameworksDebug.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E4328148138ABC890047C5CB /* openFrameworksDebug.a */; };
 		E45BE97B0E8CC7DD009D7055 /* AGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9710E8CC7DD009D7055 /* AGL.framework */; };
 		E45BE97C0E8CC7DD009D7055 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */; };
@@ -196,6 +197,8 @@
 		D7D83EF74FC7508D9146FA63 /* ofxUILabel.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxUILabel.cpp; path = ../../../addons/ofxUI/src/ofxUILabel.cpp; sourceTree = SOURCE_ROOT; };
 		DBE31D52BCB0CE44B9D154F0 /* ofxUITextArea.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxUITextArea.cpp; path = ../../../addons/ofxUI/src/ofxUITextArea.cpp; sourceTree = SOURCE_ROOT; };
 		E2813E36CEFD8D1C1B70E600 /* ofxUIRangeSlider.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxUIRangeSlider.cpp; path = ../../../addons/ofxUI/src/ofxUIRangeSlider.cpp; sourceTree = SOURCE_ROOT; };
+		E409B2AB1A36621900F6D821 /* Tree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Tree.cpp; sourceTree = "<group>"; };
+		E409B2AC1A36621900F6D821 /* Tree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tree.h; sourceTree = "<group>"; };
 		E4328143138ABC890047C5CB /* openFrameworksLib.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = openFrameworksLib.xcodeproj; path = ../../../libs/openFrameworksCompiled/project/osx/openFrameworksLib.xcodeproj; sourceTree = SOURCE_ROOT; };
 		E45BE9710E8CC7DD009D7055 /* AGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AGL.framework; path = /System/Library/Frameworks/AGL.framework; sourceTree = "<absolute>"; };
 		E45BE9720E8CC7DD009D7055 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
@@ -476,6 +479,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				8F34C4081A33A90900E35B38 /* Kinematics.cpp */,
 				8F34C4091A33A90900E35B38 /* Kinematics.h */,
+				E409B2AB1A36621900F6D821 /* Tree.cpp */,
+				E409B2AC1A36621900F6D821 /* Tree.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -597,6 +602,7 @@
 				22030CBDCC25D815E7ED6757 /* ofxUIFPSSlider.cpp in Sources */,
 				3D4EA8E172D3E4A30FEFA969 /* ofxUIImage.cpp in Sources */,
 				7F2CD93F681F3C1547B3BF2C /* ofxUIImageButton.cpp in Sources */,
+				E409B2AD1A36621900F6D821 /* Tree.cpp in Sources */,
 				FBD0CD0AFE3849C14E829CAF /* ofxUIImageSampler.cpp in Sources */,
 				26874B150C8535AEA0F24C8C /* ofxUIImageSlider.cpp in Sources */,
 				FB8AA9FA6535767BE31806BC /* ofxUIImageToggle.cpp in Sources */,

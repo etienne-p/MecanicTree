@@ -18,7 +18,7 @@ namespace Kinematic {
         float r = 100.f;
         float d = .8f;
         elements.clear();
-        for (int i = 0; i < 5; i++){
+        for (int i = 0; i < 12; i++){
             ChainElement elt;
             elt.joint = 0;
             r *= .9f;
