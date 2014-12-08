@@ -16,13 +16,15 @@ namespace Kinematic {
         dJoint = .1f;
         
         float r = 100.f;
-        float d = 0.4;
+        float d = .8f;
         elements.clear();
-        for (int i = 0; i < 8; i++){
+        for (int i = 0; i < 5; i++){
             ChainElement elt;
             elt.joint = 0;
-            r *= .8f;
+            r *= .9f;
+            d *= 1.1f;
             elt.link = r;
+            elt.dof = d;
             elements.push_back(elt);
         }
         
@@ -30,15 +32,34 @@ namespace Kinematic {
     };
     
     void Chain::reset(){
+        for (int i = 0, len = elements.size(); i < len; i++){
+            elements[i].velocity = 0;
+        }
+        updatesForCurrentIndex = 0;
+        error = FLT_MAX;
         cartesianPoints.resize(elements.size() + 1);
         updateCartesianPoints();
         elementIndex = elements.size() - 1;
     };
     
     void Chain::update(){
-        elements[elementIndex].joint += evalJointDelta();
+        elements[elementIndex].velocity += .01f * evalJointDelta();
+        for (int i = 0, len = elements.size(); i < len; i++){
+            elements[i].joint += elements[i].velocity;
+            elements[i].joint = min(elements[i].joint, elements[i].dof);
+            elements[i].joint = max(elements[i].joint, -elements[i].dof);
+            elements[i].velocity *= .9f;
+        }
         updateCartesianPoints();
-        elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
+        bool hitDOF = abs(elements[elementIndex].joint) == elements[elementIndex].dof;
+        float newError = target.distance(cartesianPoints.back());
+        if (newError > error || hitDOF || updatesForCurrentIndex > 48){
+            elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
+            updatesForCurrentIndex = 0;
+        } else {
+            updatesForCurrentIndex++;
+        }
+        error = newError;
     };
     
     void Chain::draw(){
