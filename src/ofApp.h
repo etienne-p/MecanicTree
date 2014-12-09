@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "Kinematics.h"
+#include "Tree.h"
 
 using namespace Kinematic;
 
@@ -23,5 +23,5 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
 		
-        Chain * chain;
+        Tree * tree;
 };

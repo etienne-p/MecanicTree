@@ -14,27 +14,23 @@
 
 namespace Kinematic {
     
-struct TreeNode {
-    Chain branch;
-    TreeNode * parent;
-    vector<TreeNode> childs; // use pointers?
-};
-
-class Tree {
+class TreeNode {
     
 public:
     
-    Tree();
+    TreeNode(float offset, int len);
     void update();
-    void update(TreeNode node);
     void draw();
+    void reset();
     void setTarget(ofVec2f target);
-    void setTarget(ofVec2f target, TreeNode node);
+    void addChild(float offset, int len);
     
-private:
-    
-    TreeNode root;
+    Chain * chain;
+    TreeNode * parent;
+    vector<TreeNode*> childs;
 };
+    
+typedef TreeNode Tree;
     
 }
 

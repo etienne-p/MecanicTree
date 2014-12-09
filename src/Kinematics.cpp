@@ -10,19 +10,21 @@
 
 namespace Kinematic {
 
-    Chain::Chain(){
+    Chain::Chain(float offset, int len){
         
-        base.set(200.f, 200.f);
+        base.set(400.f, 400.f);
         dJoint = .1f;
+        baseAngle = PI * -.5f;
+        offsetAngle = offset;
         
-        float r = 100.f;
-        float d = .8f;
+        float r = 16.f;
+        float d = .1f;
         elements.clear();
-        for (int i = 0; i < 12; i++){
+        for (int i = 0; i < len; i++){
             ChainElement elt;
             elt.joint = 0;
-            r *= .9f;
-            d *= 1.1f;
+            //r *= .9f;
+            //d *= 1.1f;
             elt.link = r;
             elt.dof = d;
             elements.push_back(elt);
@@ -82,10 +84,20 @@ namespace Kinematic {
         return min(dJoint, max(-dJoint, evalAngleToTarget()));
     };
     
+    float Chain::getAbsoluteAngle(int index){
+        
+        float angle = baseAngle + offsetAngle;
+
+        for (int i = 0, len = elements.size(); i < len; i++){
+             angle += elements[i].joint;
+        }
+        return angle;
+    }
+    
     void Chain::updateCartesianPoints(){
         
         cartesianPoints[0].set(base);
-        float offsetX = base.x, offsetY = base.y, angle = 0;
+        float offsetX = base.x, offsetY = base.y, angle = baseAngle + offsetAngle;
         
         for (int i = 0, len = elements.size(); i < len; i++){
             angle += elements[i].joint;

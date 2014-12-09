@@ -4,17 +4,19 @@
 void ofApp::setup(){
 
     
-    chain = new Chain();
+    tree = new Tree(0, 6);
+    tree->addChild(-.4f, 3);
+    tree->addChild(.4f, 3);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    chain->update();
+    tree->update();
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    chain->draw();
+    tree->draw();
 }
 
 //--------------------------------------------------------------
@@ -39,8 +41,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-    chain->target.set(x, y);
-    chain->reset();
+    tree->setTarget(ofVec2f(x, y));
+    tree->reset();
 }
 
 //--------------------------------------------------------------

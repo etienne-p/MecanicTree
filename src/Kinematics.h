@@ -24,12 +24,15 @@ class Chain {
     
 public:
     
+    float offsetAngle;
+    float baseAngle; // rotate whole
     ofVec2f base;
     ofVec2f target;
     vector<ChainElement> elements;
+    vector<ofVec2f> cartesianPoints;
     float dJoint;
     
-    Chain();
+    Chain(float offset, int len);
     void update();
     void reset();
     void draw();
@@ -37,10 +40,10 @@ public:
     // state
     int elementIndex;
     
+    float getAbsoluteAngle(int index);
+    
 private:
 
-    vector<ofVec2f> cartesianPoints;
-    
     float evalAngleToTarget();
     float evalJointDelta();
     void updateCartesianPoints();

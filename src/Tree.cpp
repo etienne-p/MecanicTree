@@ -10,26 +10,41 @@
 
 namespace Kinematic {
     
-    // recursive
-    void Tree::setTarget(ofVec2f target, TreeNode node){
-        node.branch.target.set(target);
-        for (int i = 0, len = node.childs.size(); i < len; i++){
-            setTarget(target, node.childs[i]);
+    TreeNode::TreeNode(float offset, int len){
+        chain = new Chain(offset, len);
+    }
+    
+    void TreeNode::addChild(float offset, int len){
+        childs.push_back(new TreeNode(offset, len));
+    }
+    
+    void TreeNode::setTarget(ofVec2f target){
+        chain->target.set(target);
+        for (int i = 0, len = childs.size(); i < len; i++){
+            childs[i]->setTarget(target);
         }
     }
     
-    void Tree::setTarget(ofVec2f target){
-        setTarget(target, root);
+    void TreeNode::update(){
+        chain->update();
+        for (int i = 0, len = childs.size(); i < len; i++){
+            childs[i]->chain->baseAngle = chain->getAbsoluteAngle(3);
+            childs[i]->chain->base.set(chain->cartesianPoints[3]);
+            childs[i]->update();
+        }
     }
     
-    void Tree::update(TreeNode node){
-    
+    void TreeNode::reset(){
+        chain->reset();
+        for (int i = 0, len = childs.size(); i < len; i++){
+            childs[i]->reset();
+        }
     }
-
-    void Tree::update(){
-        
-        // recursively update, starting from root
     
+    void TreeNode::draw(){
+        chain->draw();
+        for (int i = 0, len = childs.size(); i < len; i++){
+           childs[i]->draw();
+        }
     }
-
 };
