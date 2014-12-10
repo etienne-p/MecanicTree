@@ -10,7 +10,7 @@
 #define __ofForest__Tree__
 
 #include "ofMain.h"
-#include "Kinematics.h"
+#include "Chain.h"
 
 namespace Kinematic {
     
@@ -18,16 +18,17 @@ class TreeNode {
     
 public:
     
-    TreeNode(float offset, int len);
+    TreeNode(float offset, int jointCount, float length);
     void update();
     void draw();
     void reset();
     void setTarget(ofVec2f target);
-    void addChild(float offset, int len);
+    TreeNode * addChild(float offset, int parentJoint, int jointCount, float length);
     
     Chain * chain;
     TreeNode * parent;
     vector<TreeNode*> childs;
+    int parentJointIndex;
 };
     
 typedef TreeNode Tree;

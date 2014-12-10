@@ -6,27 +6,25 @@
 //
 //
 
-#include "Kinematics.h"
+#include "Chain.h"
 
 namespace Kinematic {
 
-    Chain::Chain(float offset, int len){
+    Chain::Chain(float offset, int jointCount, float length){
         
-        base.set(400.f, 400.f);
-        dJoint = .1f;
+        dJoint = .01f;
         baseAngle = PI * -.5f;
         offsetAngle = offset;
         
-        float r = 16.f;
-        float d = .1f;
+        float r = length / ((float)jointCount + 1.f);
+        float d = .01f;
         elements.clear();
-        for (int i = 0; i < len; i++){
+        for (int i = 0; i < jointCount; i++){
             ChainElement elt;
             elt.joint = 0;
-            //r *= .9f;
-            //d *= 1.1f;
             elt.link = r;
             elt.dof = d;
+            d *= 1.4f;
             elements.push_back(elt);
         }
         
@@ -55,7 +53,7 @@ namespace Kinematic {
         updateCartesianPoints();
         bool hitDOF = abs(elements[elementIndex].joint) == elements[elementIndex].dof;
         float newError = target.distance(cartesianPoints.back());
-        if (newError > error || hitDOF || updatesForCurrentIndex > 48){
+        if (newError > error || hitDOF || updatesForCurrentIndex > 120){
             elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
             updatesForCurrentIndex = 0;
         } else {
@@ -68,10 +66,10 @@ namespace Kinematic {
         for (int i = 0, len = elements.size(); i < len; i++){
             ofSetColor(i == elementIndex ? ofColor::red : ofColor::blue);
             ofLine(cartesianPoints[i], cartesianPoints[i + 1]);
-            ofCircle(cartesianPoints[i], 4.f);
+            ofCircle(cartesianPoints[i], 2.f);
         }
         ofSetColor(ofColor::red);
-        ofCircle(target, 4.f);
+        ofCircle(target, 2.f);
     };
     
     float Chain::evalAngleToTarget(){

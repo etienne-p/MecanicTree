@@ -6,8 +6,8 @@
 //
 //
 
-#ifndef __ofForest__Kinematics__
-#define __ofForest__Kinematics__
+#ifndef __ofForest__Chain__
+#define __ofForest__Chain__
 
 #include "ofMain.h"
 
@@ -24,7 +24,7 @@ class Chain {
     
 public:
     
-    float offsetAngle;
+    float offsetAngle; // depends on parent
     float baseAngle; // rotate whole
     ofVec2f base;
     ofVec2f target;
@@ -32,14 +32,10 @@ public:
     vector<ofVec2f> cartesianPoints;
     float dJoint;
     
-    Chain(float offset, int len);
+    Chain(float offset, int jointCount, float length);
     void update();
     void reset();
     void draw();
-    
-    // state
-    int elementIndex;
-    
     float getAbsoluteAngle(int index);
     
 private:
@@ -50,9 +46,10 @@ private:
     
     // state
     float error;
+    int elementIndex;
     int updatesForCurrentIndex;
 };
     
 }
 
-#endif /* defined(__ofForest__Kinematics__) */
+#endif /* defined(__ofForest__Chain__) */

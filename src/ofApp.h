@@ -24,4 +24,5 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
         Tree * tree;
+        void addBranches(TreeNode * tree, float dAngle, int jointCount, float length, int depth);
 };

@@ -10,12 +10,15 @@
 
 namespace Kinematic {
     
-    TreeNode::TreeNode(float offset, int len){
-        chain = new Chain(offset, len);
+    TreeNode::TreeNode(float offset, int jointCount, float length){
+        chain = new Chain(offset, jointCount, length);
+        parentJointIndex = 0;
     }
     
-    void TreeNode::addChild(float offset, int len){
-        childs.push_back(new TreeNode(offset, len));
+    TreeNode * TreeNode::addChild(float offset, int parentJoint, int jointCount, float length){
+        childs.push_back(new TreeNode(offset, jointCount, length));
+        childs.back()->parentJointIndex = parentJoint;
+        return childs.back();
     }
     
     void TreeNode::setTarget(ofVec2f target){
@@ -28,8 +31,9 @@ namespace Kinematic {
     void TreeNode::update(){
         chain->update();
         for (int i = 0, len = childs.size(); i < len; i++){
-            childs[i]->chain->baseAngle = chain->getAbsoluteAngle(3);
-            childs[i]->chain->base.set(chain->cartesianPoints[3]);
+            int parentJoint = childs[i]->parentJointIndex;
+            childs[i]->chain->baseAngle = chain->getAbsoluteAngle(parentJoint);
+            childs[i]->chain->base.set(chain->cartesianPoints[parentJoint]);
             childs[i]->update();
         }
     }
