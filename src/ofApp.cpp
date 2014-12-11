@@ -3,13 +3,13 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    float rootLength = 420.f;
-    float rootNodeCount = 12;
+    float rootLength = 600.f;
+    float rootNodeCount = 32;
     tree = new Tree(0, rootNodeCount, rootLength);
-    tree->chain->base.set(.5f * ofGetWidth(), .5f * ofGetHeight());
+    tree->chain->base.set(.5f * ofGetWidth(), .8f * ofGetHeight());
     
     float len = rootLength * (float)(rootNodeCount - 1) / (float)rootNodeCount;
-    addBranches(tree, .8f, rootNodeCount  - 1, len, 3);
+    addBranches(tree, .5f, rootNodeCount  - 3, len, 6);
 }
 
 //--------------------------------------------------------------
@@ -17,18 +17,21 @@ void ofApp::addBranches(TreeNode * tree, float dAngle, int jointCount, float len
     
     if (depth < 0 || jointCount < 3) return;
     
-    float len = length * (float)(jointCount - 1) / (float)jointCount;
+    float len = length * (float)(jointCount - 3) / (float)jointCount;
     
-    TreeNode * b0 = tree->addChild(-dAngle, 1, jointCount, length);
-    addBranches(b0, dAngle, jointCount / 2, len * .5f, depth - 1);
+    TreeNode * b0 = tree->addChild(-dAngle, 2, jointCount , length);
     
-    TreeNode * b1 = tree->addChild(dAngle, 1, jointCount, length);
-    addBranches(b1, dAngle, jointCount - 1, len, depth - 1);
+    addBranches(b0, dAngle * .8f, jointCount - 3, len, depth - 1);
+    
+    TreeNode * b1 = tree->addChild(dAngle, 2, jointCount, length);
+    
+    addBranches(b1, dAngle * .8f, jointCount - 3, len, depth - 1);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    for (int i = 0; i < 24; i++) tree->update();
+    //for (int i = 0; i < 24; i++) tree->update();
+    tree->update();
 }
 
 //--------------------------------------------------------------
@@ -48,7 +51,7 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    
 }
 
 //--------------------------------------------------------------

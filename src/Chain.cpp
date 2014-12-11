@@ -12,20 +12,23 @@ namespace Kinematic {
 
     Chain::Chain(float offset, int jointCount, float length){
         
-        dJoint = .01f;
+        dJoint = 1.f;
         baseAngle = PI * -.5f;
         offsetAngle = offset;
         
         float r = length / ((float)jointCount + 1.f);
-        float d = .01f;
         elements.clear();
         for (int i = 0; i < jointCount; i++){
             ChainElement elt;
             elt.joint = 0;
             elt.link = r;
-            elt.dof = d;
-            d *= 1.4f;
             elements.push_back(elt);
+        }
+        
+        float d = .8f;
+        for (int i = elements.size() - 1; i > -1; i--){
+            elements[i].dof = d;
+            d *= .9f;
         }
         
         reset();
@@ -45,15 +48,16 @@ namespace Kinematic {
     void Chain::update(){
         elements[elementIndex].velocity += .01f * evalJointDelta();
         for (int i = 0, len = elements.size(); i < len; i++){
-            elements[i].joint += elements[i].velocity;
-            elements[i].joint = min(elements[i].joint, elements[i].dof);
-            elements[i].joint = max(elements[i].joint, -elements[i].dof);
+            float dof = elements[i].dof;
+            float joint = elements[i].joint;
+            elements[i].joint = fmax(-dof, fmin(joint + elements[i].velocity, dof));
             elements[i].velocity *= .9f;
         }
         updateCartesianPoints();
         bool hitDOF = abs(elements[elementIndex].joint) == elements[elementIndex].dof;
         float newError = target.distance(cartesianPoints.back());
-        if (newError > error || hitDOF || updatesForCurrentIndex > 120){
+        if (true){
+        //if (newError > error || hitDOF || updatesForCurrentIndex > 24){
             elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
             updatesForCurrentIndex = 0;
         } else {
@@ -86,7 +90,7 @@ namespace Kinematic {
         
         float angle = baseAngle + offsetAngle;
 
-        for (int i = 0, len = elements.size(); i < len; i++){
+        for (int i = 0, len = elements.size(); i < index; i++){
              angle += elements[i].joint;
         }
         return angle;
