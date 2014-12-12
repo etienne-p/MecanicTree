@@ -31,6 +31,7 @@ public:
     vector<ChainElement> elements;
     vector<ofVec2f> cartesianPoints;
     float dJoint;
+    float awakeDistance;
     
     Chain(float offset, int jointCount, float length);
     void update();
@@ -40,8 +41,8 @@ public:
     
 private:
 
-    float evalAngleToTarget();
-    float evalJointDelta();
+    float evalAngleToTarget(ofVec2f target_);
+    float evalJointDelta(ofVec2f target_);
     void updateCartesianPoints();
     
     // state

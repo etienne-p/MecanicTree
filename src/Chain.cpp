@@ -12,9 +12,10 @@ namespace Kinematic {
 
     Chain::Chain(float offset, int jointCount, float length){
         
-        dJoint = 1.f;
+        dJoint = .5f;
         baseAngle = PI * -.5f;
         offsetAngle = offset;
+        awakeDistance = 150.f;
         
         float r = length / ((float)jointCount + 1.f);
         elements.clear();
@@ -25,10 +26,10 @@ namespace Kinematic {
             elements.push_back(elt);
         }
         
-        float d = .8f;
+        float d = 1.6f;
         for (int i = elements.size() - 1; i > -1; i--){
             elements[i].dof = d;
-            d *= .9f;
+            d *= .8f;
         }
         
         reset();
@@ -46,18 +47,24 @@ namespace Kinematic {
     };
     
     void Chain::update(){
-        elements[elementIndex].velocity += .01f * evalJointDelta();
+        if (cartesianPoints.back().distance(target) < awakeDistance){
+            elements[elementIndex].velocity += .01f * evalJointDelta(target);
+        } else {
+            ofVec2f above = ofVec2f(cartesianPoints.back());
+            above.y -= 1;
+            elements[elementIndex].velocity += .01f * evalJointDelta(above);
+        }
         for (int i = 0, len = elements.size(); i < len; i++){
             float dof = elements[i].dof;
             float joint = elements[i].joint;
             elements[i].joint = fmax(-dof, fmin(joint + elements[i].velocity, dof));
-            elements[i].velocity *= .9f;
+            elements[i].velocity *= .98f;
         }
         updateCartesianPoints();
         bool hitDOF = abs(elements[elementIndex].joint) == elements[elementIndex].dof;
         float newError = target.distance(cartesianPoints.back());
-        if (true){
-        //if (newError > error || hitDOF || updatesForCurrentIndex > 24){
+        //if (true){
+        if (newError >= error || hitDOF || updatesForCurrentIndex > 24){
             elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
             updatesForCurrentIndex = 0;
         } else {
@@ -76,21 +83,21 @@ namespace Kinematic {
         ofCircle(target, 2.f);
     };
     
-    float Chain::evalAngleToTarget(){
+    float Chain::evalAngleToTarget(ofVec2f target_){
         ofVec2f toTip = cartesianPoints.back() - cartesianPoints[elementIndex];
-        ofVec2f toTarget = target - cartesianPoints[elementIndex];
+        ofVec2f toTarget = target_ - cartesianPoints[elementIndex];
         return toTip.angleRad(toTarget);
     };
     
-    float Chain::evalJointDelta(){
-        return min(dJoint, max(-dJoint, evalAngleToTarget()));
+    float Chain::evalJointDelta(ofVec2f target_){
+        return min(dJoint, max(-dJoint, evalAngleToTarget(target_)));
     };
     
     float Chain::getAbsoluteAngle(int index){
         
         float angle = baseAngle + offsetAngle;
 
-        for (int i = 0, len = elements.size(); i < index; i++){
+        for (int i = 0, len = elements.size(); i <= index; i++){
              angle += elements[i].joint;
         }
         return angle;
