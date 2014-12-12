@@ -15,7 +15,7 @@ namespace Kinematic {
         dJoint = .5f;
         baseAngle = PI * -.5f;
         offsetAngle = offset;
-        awakeDistance = 1000.f;
+        awakeDistance = 150.f;
         
         float r = length / ((float)jointCount + 1.f);
         elements.clear();
