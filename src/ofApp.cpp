@@ -6,7 +6,7 @@ void ofApp::setup(){
     float rootLength = 600.f;
     float rootNodeCount = 24;
     tree = new Tree(0, rootNodeCount, rootLength);
-    tree->chain->base.set(.5f * ofGetWidth(), .8f * ofGetHeight());
+    tree->base.set(.5f * ofGetWidth(), .8f * ofGetHeight());
     
     float len = rootLength * (float)(rootNodeCount - 1) / (float)rootNodeCount;
     addBranches(tree, .4f, rootNodeCount  - 2, len, 5);
@@ -19,11 +19,11 @@ void ofApp::addBranches(TreeNode * tree, float dAngle, int jointCount, float len
     
     float len = length * (float)(jointCount - 2) / (float)jointCount;
     
-    TreeNode * b0 = tree->addChild(-dAngle, 2, jointCount , length);
+    TreeNode * b0 = tree->addChild(2, -dAngle, jointCount , length);
     
     addBranches(b0, dAngle * .8f, jointCount - 2, len, depth - 1);
     
-    TreeNode * b1 = tree->addChild(dAngle, 2, jointCount, length);
+    TreeNode * b1 = tree->addChild(2, dAngle, jointCount, length);
     
     addBranches(b1, dAngle * .8f, jointCount - 2, len, depth - 1);
 }

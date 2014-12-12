@@ -38,8 +38,9 @@ public:
     void reset();
     void draw();
     float getAbsoluteAngle(int index);
+    void setDOF(float initValue, float decreaseFactor);
     
-private:
+protected:
 
     float evalAngleToTarget(ofVec2f target_);
     float evalJointDelta(ofVec2f target_);

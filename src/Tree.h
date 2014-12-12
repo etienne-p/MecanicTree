@@ -14,7 +14,7 @@
 
 namespace Kinematic {
     
-class TreeNode {
+class TreeNode : public Chain {
     
 public:
     
@@ -22,10 +22,9 @@ public:
     void update();
     void draw();
     void reset();
-    void setTarget(ofVec2f target);
-    TreeNode * addChild(float offset, int parentJoint, int jointCount, float length);
+    void setTarget(ofVec2f target_);
+    TreeNode * addChild(int parentJoint, float offset, int jointCount, float length);
     
-    Chain * chain;
     TreeNode * parent;
     vector<TreeNode*> childs;
     int parentJointIndex;

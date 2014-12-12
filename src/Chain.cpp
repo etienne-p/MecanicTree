@@ -15,7 +15,7 @@ namespace Kinematic {
         dJoint = .5f;
         baseAngle = PI * -.5f;
         offsetAngle = offset;
-        awakeDistance = 150.f;
+        awakeDistance = 1000.f;
         
         float r = length / ((float)jointCount + 1.f);
         elements.clear();
@@ -26,14 +26,17 @@ namespace Kinematic {
             elements.push_back(elt);
         }
         
-        float d = 1.6f;
-        for (int i = elements.size() - 1; i > -1; i--){
-            elements[i].dof = d;
-            d *= .8f;
-        }
-        
+        setDOF(1.6f, .8f);
         reset();
     };
+    
+    void Chain::setDOF(float initValue, float decreaseFactor){
+        float dof = initValue;
+        for (int i = elements.size() - 1; i > -1; i--){
+            elements[i].dof = dof;
+            dof *= decreaseFactor;
+        }
+    }
     
     void Chain::reset(){
         for (int i = 0, len = elements.size(); i < len; i++){
@@ -63,7 +66,6 @@ namespace Kinematic {
         updateCartesianPoints();
         bool hitDOF = abs(elements[elementIndex].joint) == elements[elementIndex].dof;
         float newError = target.distance(cartesianPoints.back());
-        //if (true){
         if (newError >= error || hitDOF || updatesForCurrentIndex > 24){
             elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
             updatesForCurrentIndex = 0;
@@ -94,9 +96,7 @@ namespace Kinematic {
     };
     
     float Chain::getAbsoluteAngle(int index){
-        
         float angle = baseAngle + offsetAngle;
-
         for (int i = 0, len = elements.size(); i <= index; i++){
              angle += elements[i].joint;
         }

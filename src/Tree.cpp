@@ -10,43 +10,42 @@
 
 namespace Kinematic {
     
-    TreeNode::TreeNode(float offset, int jointCount, float length){
-        chain = new Chain(offset, jointCount, length);
+    TreeNode::TreeNode(float offset, int jointCount, float length) : Chain(offset, jointCount, length){
         parentJointIndex = 0;
     }
     
-    TreeNode * TreeNode::addChild(float offset, int parentJoint, int jointCount, float length){
+    TreeNode * TreeNode::addChild(int parentJoint, float offset, int jointCount, float length){
         childs.push_back(new TreeNode(offset, jointCount, length));
         childs.back()->parentJointIndex = parentJoint;
         return childs.back();
     }
     
-    void TreeNode::setTarget(ofVec2f target){
-        chain->target.set(target);
+    void TreeNode::setTarget(ofVec2f target_){
+        target.set(target_);
         for (int i = 0, len = childs.size(); i < len; i++){
-            childs[i]->setTarget(target);
+            childs[i]->setTarget(target_);
         }
     }
     
     void TreeNode::update(){
-        chain->update();
+        Chain::update();
         for (int i = 0, len = childs.size(); i < len; i++){
             int parentJoint = childs[i]->parentJointIndex;
-            childs[i]->chain->baseAngle = chain->getAbsoluteAngle(parentJoint);
-            childs[i]->chain->base.set(chain->cartesianPoints[parentJoint]);
+            childs[i]->baseAngle = getAbsoluteAngle(parentJoint);
+            childs[i]->base.set(cartesianPoints[parentJoint]);
             childs[i]->update();
         }
     }
     
     void TreeNode::reset(){
-        chain->reset();
+        Chain::reset();
         for (int i = 0, len = childs.size(); i < len; i++){
             childs[i]->reset();
         }
     }
     
     void TreeNode::draw(){
-        chain->draw();
+        Chain::draw();
         for (int i = 0, len = childs.size(); i < len; i++){
            childs[i]->draw();
         }
