@@ -19,6 +19,7 @@ class TreeNode : public Chain {
 public:
     
     TreeNode(float offset, int jointCount, float length);
+    ~TreeNode();
     void update();
     void draw();
     void reset();

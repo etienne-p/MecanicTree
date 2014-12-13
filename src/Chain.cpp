@@ -66,7 +66,7 @@ namespace Kinematic {
         updateCartesianPoints();
         bool hitDOF = abs(elements[elementIndex].joint) == elements[elementIndex].dof;
         float newError = target.distance(cartesianPoints.back());
-        if (newError >= error || hitDOF || updatesForCurrentIndex > 24){
+        if (true/*newError >= error || hitDOF || updatesForCurrentIndex > 24*/){
             elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
             updatesForCurrentIndex = 0;
         } else {

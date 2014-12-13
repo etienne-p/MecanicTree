@@ -14,6 +14,16 @@ namespace Kinematic {
         parentJointIndex = 0;
     }
     
+    TreeNode::~TreeNode(){
+        // clearing the pointers vector would not free the objects
+        while(!childs.empty()) {
+            delete childs.back();
+            childs.pop_back();
+        }
+        
+        parent = NULL; // Does not destroy the parent
+    }
+    
     TreeNode * TreeNode::addChild(int parentJoint, float offset, int jointCount, float length){
         childs.push_back(new TreeNode(offset, jointCount, length));
         childs.back()->parentJointIndex = parentJoint;
