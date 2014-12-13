@@ -29,6 +29,17 @@ public:
     TreeNode * parent;
     vector<TreeNode*> childs;
     int parentJointIndex;
+    
+    void setJointDelta(float value);
+    void setAwakeDistance(float value);
+    void setFriction(float value);
+    void setMaxUpdatesPerJoint(int value);
+    
+    // DOF
+    float dofBaseValue, dofDecreaseFactor;
+    void setDOFBaseValue(float baseValue);
+    void setDOFDecreaseFactor(float decreaseFactor);
+    void setDOF(float baseValue, float decreaseFactor);
 };
     
 typedef TreeNode Tree;

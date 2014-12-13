@@ -24,14 +24,16 @@ class Chain {
     
 public:
     
+    float friction;
     float offsetAngle; // depends on parent
     float baseAngle; // rotate whole
     ofVec2f base;
     ofVec2f target;
     vector<ChainElement> elements;
     vector<ofVec2f> cartesianPoints;
-    float dJoint;
+    float jointDelta;
     float awakeDistance;
+    int maxUpdatesPerJoint;
     
     Chain(float offset, int jointCount, float length);
     void update();

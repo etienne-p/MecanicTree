@@ -12,10 +12,12 @@ namespace Kinematic {
 
     Chain::Chain(float offset, int jointCount, float length){
         
-        dJoint = .5f;
+        jointDelta = .5f;
         baseAngle = PI * -.5f;
         offsetAngle = offset;
         awakeDistance = 150.f;
+        friction = .98f;
+        maxUpdatesPerJoint = 24;
         
         float r = length / ((float)jointCount + 1.f);
         elements.clear();
@@ -61,12 +63,12 @@ namespace Kinematic {
             float dof = elements[i].dof;
             float joint = elements[i].joint;
             elements[i].joint = fmax(-dof, fmin(joint + elements[i].velocity, dof));
-            elements[i].velocity *= .98f;
+            elements[i].velocity *= friction;
         }
         updateCartesianPoints();
         bool hitDOF = abs(elements[elementIndex].joint) == elements[elementIndex].dof;
         float newError = target.distance(cartesianPoints.back());
-        if (true/*newError >= error || hitDOF || updatesForCurrentIndex > 24*/){
+        if (newError >= error || hitDOF || updatesForCurrentIndex > maxUpdatesPerJoint){
             elementIndex = elementIndex < 1 ? elements.size() - 1 : elementIndex - 1;
             updatesForCurrentIndex = 0;
         } else {
@@ -92,7 +94,7 @@ namespace Kinematic {
     };
     
     float Chain::evalJointDelta(ofVec2f target_){
-        return min(dJoint, max(-dJoint, evalAngleToTarget(target_)));
+        return min(jointDelta, max(-jointDelta, evalAngleToTarget(target_)));
     };
     
     float Chain::getAbsoluteAngle(int index){

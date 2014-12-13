@@ -12,6 +12,8 @@ namespace Kinematic {
     
     TreeNode::TreeNode(float offset, int jointCount, float length) : Chain(offset, jointCount, length){
         parentJointIndex = 0;
+        dofBaseValue = .5f;
+        dofDecreaseFactor = 1;
     }
     
     TreeNode::~TreeNode(){
@@ -60,4 +62,50 @@ namespace Kinematic {
            childs[i]->draw();
         }
     }
+    
+    void TreeNode::setMaxUpdatesPerJoint(int value){
+        maxUpdatesPerJoint = value;
+        for (int i = 0, len = childs.size(); i < len; i++){
+            childs[i]->setMaxUpdatesPerJoint(value);
+        }
+    }
+    
+    void TreeNode::setJointDelta(float value){
+        jointDelta = value;
+        for (int i = 0, len = childs.size(); i < len; i++){
+            childs[i]->setJointDelta(value);
+        }
+    }
+    
+    void TreeNode::setAwakeDistance(float value){
+        awakeDistance = value;
+        for (int i = 0, len = childs.size(); i < len; i++){
+            childs[i]->setAwakeDistance(value);
+        }
+    }
+
+    void TreeNode::setFriction(float value){
+        friction = value;
+        for (int i = 0, len = childs.size(); i < len; i++){
+            childs[i]->setFriction(value);
+        }
+    }
+    
+    void TreeNode::setDOF(float baseValue, float decreaseFactor){
+        dofBaseValue = baseValue;
+        dofDecreaseFactor = decreaseFactor;
+        Chain::setDOF(baseValue, decreaseFactor);
+        for (int i = 0, len = childs.size(); i < len; i++){
+            childs[i]->setDOF(baseValue, decreaseFactor);
+        }
+    }
+    
+    void TreeNode::setDOFBaseValue(float baseValue){
+        setDOF(baseValue, dofDecreaseFactor);
+    }
+    
+    void TreeNode::setDOFDecreaseFactor(float decreaseFactor){
+        setDOF(dofBaseValue, decreaseFactor);
+    }
+   
 };

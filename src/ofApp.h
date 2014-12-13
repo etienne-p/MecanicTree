@@ -38,4 +38,6 @@ public:
     ofxUICanvas * gui;
     void setupUI();
     void guiEvent(ofxUIEventArgs &e);
+    
+    void syncBranchesParamsOnGui();
 };
