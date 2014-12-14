@@ -12,6 +12,7 @@
 #include <iostream>
 #include "Chain.h"
 #include "Tree.h"
+#include <sndfile.hh>
 
 namespace Sonify {
     
@@ -19,20 +20,21 @@ struct AudioSourceData {
     Kinematic::ChainElement * elt;
     float volume;
     float pitch;
+    float currentFrame;
 };
     
 class AudioGenerator{
     
 public:
     
-    vector<AudioSourceData *> sources;
-
+    vector<AudioSourceData> sources;
+    vector<float> sourceBuffer;
+    
     AudioGenerator();
     void clearSources();
     void reset(Kinematic::Tree * tree);
-    void process(float * output, int bufferSize);
-    void processSource(float * output, int bufferSize, AudioSourceData * source);
-    
+    void process(float * output, int bufferSize, int nChannels);
+    void processSource(float * output, int bufferSize, AudioSourceData& source);
 };
     
 };

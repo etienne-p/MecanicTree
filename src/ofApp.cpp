@@ -10,19 +10,27 @@ void ofApp::setup(){
     branchDepth = 5;
     branchAngleOffset = .4f;
     
+    audioGenerator = new AudioGenerator();
+    
     makeTree();
     setupUI();
     
+    soundStream.setup(this, 2, 0, 44100, 256, 4);
 }
 
 void ofApp::makeTree(){
     
-    if (tree != NULL) delete tree;
+    if (tree != NULL) {
+        audioGenerator->clearSources();
+        delete tree;
+    }
     
     tree = new Tree(0, rootNodeCount, rootLength);
     tree->base.set(.5f * ofGetWidth(), .96f * ofGetHeight());
     float len = rootLength * (float)(rootNodeCount - 1) / (float)rootNodeCount;
     addBranches(tree, branchAngleOffset, rootNodeCount  - parentJointOffset, len, branchDepth);
+    
+    audioGenerator->reset(tree);
 }
 
 void ofApp::setupUI(){
@@ -125,11 +133,9 @@ void ofApp::addBranches(TreeNode * tree, float dAngle, int jointCount, float len
     float len = length * (float)(jointCount - parentJointOffset) / (float)jointCount;
     
     TreeNode * b0 = tree->addChild(parentJointOffset, -dAngle, jointCount , length);
-    
-    addBranches(b0, dAngle * .8f, jointCount - parentJointOffset, len, depth - 1);
-    
     TreeNode * b1 = tree->addChild(parentJointOffset, dAngle, jointCount, length);
     
+    addBranches(b0, dAngle * .8f, jointCount - parentJointOffset, len, depth - 1);
     addBranches(b1, dAngle * .8f, jointCount - parentJointOffset, len, depth - 1);
 }
 
@@ -188,4 +194,14 @@ void ofApp::gotMessage(ofMessage msg){
 //--------------------------------------------------------------
 void ofApp::dragEvent(ofDragInfo dragInfo){ 
 
+}
+
+//--------------------------------------------------------------
+void ofApp::audioRequested(float *output, int bufferSize, int nChannels){
+	audioGenerator->process(output, bufferSize, nChannels);
+}
+
+//--------------------------------------------------------------
+void ofApp::audioReceived(float * input,int bufferSize,int nChannels){
+    
 }

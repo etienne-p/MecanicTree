@@ -2,9 +2,11 @@
 
 #include "ofMain.h"
 #include "Tree.h"
+#include "Sonify.h"
 #include "ofxUI.h"
 
 using namespace Kinematic;
+using namespace Sonify;
 
 class ofApp : public ofBaseApp{
 
@@ -40,4 +42,12 @@ public:
     void guiEvent(ofxUIEventArgs &e);
     
     void syncBranchesParamsOnGui();
+    
+    AudioGenerator * audioGenerator;
+    
+    void audioRequested(float * output, int bufferSize, int nChannels);
+    void audioReceived(float * input, int bufferSize, int nChannels);
+    ofSoundStream soundStream;
+
+    
 };
