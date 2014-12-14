@@ -15,6 +15,9 @@ namespace Sonify {
 
     AudioGenerator::AudioGenerator(){
         
+        volumeInterpolationFactor = 0.0001f;
+        pitchInterpolationFactor = 0.0001f;
+        
         SndfileHandle file;
         file = SndfileHandle("/Users/etienne/Dev/of_v0.8.3_osx_release/apps/myApps/ofForest/bin/data/fx.wav");
         int numFrames = file.frames();
@@ -25,6 +28,7 @@ namespace Sonify {
         for (int i = 0; i < numFrames; i++){
             sourceBuffer.push_back(buffer[i]); // TODO: best way?
         }
+        sourceBuffer.push_back(buffer[0]);
     }
     
     void AudioGenerator::clearSources(){
@@ -32,32 +36,56 @@ namespace Sonify {
     }
     
     void AudioGenerator::reset(Kinematic::Tree * tree){
-        
         if (sources.size() > 0) clearSources();
+        addSources(tree);
+    }
+    
+    void AudioGenerator::addSources(Kinematic::Tree * tree){
         
         AudioSourceData source;
-        source.elt = &(tree->elements[0]);
+        source.chain = tree;
         source.volume = 0;
         source.pitch = 1.f;
-        source.currentFrame = 0;
-        
+        source.position = 0;
         sources.push_back(source);
+    
+        for (int i = 0, len = tree->childs.size(); i < len; i++){
+            addSources(tree->childs[i]);
+        }
     }
     
     void AudioGenerator::process(float * output, int bufferSize, int nChannels){
-        for (int i = 0, len = sources.size(); i < 1; i++){
-            processSource(output, bufferSize, sources[i]);
+        for (int i = 0, len = sources.size(); i < len; i++){
+            processSource(output, bufferSize, nChannels, sources[i]);
         }
     }
 
-    void AudioGenerator::processSource(float * output, int bufferSize, AudioSourceData& source){
-        int len = sourceBuffer.size();
-        int frame = source.currentFrame;
-        for (int i = 0; i < bufferSize; i = i + 2){
-            output[i] = sourceBuffer[frame];
-            output[i + 1] = sourceBuffer[frame];
-            frame = (frame + 1) % len;
+    void AudioGenerator::processSource(float * output, int bufferSize, int nChannels, AudioSourceData& source){
+        
+        int len = sourceBuffer.size() - 1;
+        float alpha = 0;
+        float currentPitch = source.pitch;
+        float currentVolume = source.volume;
+        float currentPosition = source.position;
+        
+        Kinematic::ChainElement * elt = &(source.chain->elements[source.chain->elementIndex]);
+        float dJoint = abs(elt->joint - elt->prevJoint);
+        float targetVolume = min(.1f, dJoint * 100);
+        float targetPitch = min(2.f, 0.5f + dJoint * 8.f);
+        
+        
+        for (int i = 0; i < bufferSize; i++){
+            int fpos = floorf(currentPosition);
+            alpha = currentPosition - fpos;
+            float sample = 0.5 * (alpha * sourceBuffer[fpos] + (1 - alpha) * sourceBuffer[fpos + 1]);
+            currentVolume += volumeInterpolationFactor * (targetVolume - currentVolume);
+            output[i * nChannels] = output[i * nChannels + 1] = sample * currentVolume;
+            currentPitch += pitchInterpolationFactor * (targetPitch - currentPitch);
+            currentPosition = fmod(len + currentPosition + currentPitch, len);
         }
-        source.currentFrame = frame;
+        
+        source.position = currentPosition;
+        source.volume = currentVolume;
+        source.pitch = currentPitch;
     }
 }

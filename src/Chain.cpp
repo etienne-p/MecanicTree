@@ -24,6 +24,7 @@ namespace Kinematic {
         for (int i = 0; i < jointCount; i++){
             ChainElement elt;
             elt.joint = 0;
+            elt.prevJoint = elt.joint;
             elt.link = r;
             elements.push_back(elt);
         }
@@ -62,6 +63,7 @@ namespace Kinematic {
         for (int i = 0, len = elements.size(); i < len; i++){
             float dof = elements[i].dof;
             float joint = elements[i].joint;
+            elements[i].prevJoint = joint;
             elements[i].joint = fmax(-dof, fmin(joint + elements[i].velocity, dof));
             elements[i].velocity *= friction;
         }

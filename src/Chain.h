@@ -16,6 +16,7 @@ namespace Kinematic {
 struct ChainElement {
     float link;
     float joint;
+    float prevJoint;
     float dof;
     float velocity;
 };
@@ -42,6 +43,9 @@ public:
     float getAbsoluteAngle(int index);
     void setDOF(float initValue, float decreaseFactor);
     
+    int elementIndex;
+    
+    
 protected:
 
     float evalAngleToTarget(ofVec2f target_);
@@ -50,7 +54,6 @@ protected:
     
     // state
     float error;
-    int elementIndex;
     int updatesForCurrentIndex;
 };
     

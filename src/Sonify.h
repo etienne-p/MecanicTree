@@ -17,10 +17,10 @@
 namespace Sonify {
     
 struct AudioSourceData {
-    Kinematic::ChainElement * elt;
+    Kinematic::Chain * chain;
     float volume;
     float pitch;
-    float currentFrame;
+    float position;
 };
     
 class AudioGenerator{
@@ -30,11 +30,15 @@ public:
     vector<AudioSourceData> sources;
     vector<float> sourceBuffer;
     
+    float volumeInterpolationFactor;
+    float pitchInterpolationFactor;
+    
     AudioGenerator();
     void clearSources();
     void reset(Kinematic::Tree * tree);
+    void addSources(Kinematic::Tree * tree);
     void process(float * output, int bufferSize, int nChannels);
-    void processSource(float * output, int bufferSize, AudioSourceData& source);
+    void processSource(float * output, int bufferSize, int nChannels, AudioSourceData& source);
 };
     
 };

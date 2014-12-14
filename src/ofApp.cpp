@@ -4,10 +4,10 @@
 void ofApp::setup(){
     
     tree = NULL;
-    rootNodeCount = 24;
+    rootNodeCount = 12;
     rootLength = 600.f;
     parentJointOffset = 2;
-    branchDepth = 5;
+    branchDepth = 3;
     branchAngleOffset = .4f;
     
     audioGenerator = new AudioGenerator();
