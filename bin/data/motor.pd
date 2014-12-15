@@ -1,0 +1,51 @@
+#N canvas -982 336 679 614 10;
+#X text 15 11 http://obiwannabe.co.uk/tutorials/html/tutorials_main.html
+;
+#X obj 195 506 dac~;
+#X obj 195 403 *~;
+#X obj 209 330 phasor~;
+#X obj 210 356 *~;
+#X obj 111 340 *~;
+#X obj 112 365 +~;
+#X obj 93 81 vsl 15 128 0 2 0 0 empty empty brush-level 0 -8 0 8 -241291
+-260818 -1 0 1;
+#X obj 210 378 *~;
+#X obj 420 78 vsl 15 128 0 1 0 0 empty empty volume 0 -8 0 8 -241291
+-1 -1 0 1;
+#X obj 191 234 ead~ 3000 3000;
+#X obj 20 88 bng 32 250 50 0 empty empty GO! 0 -12 0 16 -258699 -241291
+-24198;
+#X obj 195 473 *~;
+#X obj 255 78 vsl 15 128 1 5000 0 0 empty empty operation-time 0 -8
+0 8 -355 -262144 -1 0 1;
+#X obj 139 340 sig~ 0.2;
+#X obj 172 80 vsl 15 128 0 2 0 0 empty empty rotor-level 0 -8 0 8 -262131
+-1 -1 0 1;
+#X obj 352 78 vsl 15 128 1 5000 0 0 empty empty top-speed 0 -8 0 8
+-90133 -262144 -1 0 1;
+#X obj 194 430 *~;
+#X obj 109 312 noise~;
+#X obj 209 301 *~ 500;
+#X connect 2 0 17 0;
+#X connect 3 0 4 0;
+#X connect 3 0 4 1;
+#X connect 4 0 8 0;
+#X connect 4 0 8 1;
+#X connect 5 0 6 0;
+#X connect 6 0 2 0;
+#X connect 7 0 5 1;
+#X connect 8 0 2 1;
+#X connect 9 0 12 1;
+#X connect 10 0 17 1;
+#X connect 10 0 19 0;
+#X connect 11 0 10 0;
+#X connect 12 0 1 0;
+#X connect 12 0 1 1;
+#X connect 13 0 10 2;
+#X connect 13 0 10 1;
+#X connect 14 0 6 1;
+#X connect 15 0 14 0;
+#X connect 16 0 19 1;
+#X connect 17 0 12 0;
+#X connect 18 0 5 0;
+#X connect 19 0 3 0;

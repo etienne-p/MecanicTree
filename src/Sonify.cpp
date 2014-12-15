@@ -15,11 +15,12 @@ namespace Sonify {
 
     AudioGenerator::AudioGenerator(){
         
-        volumeInterpolationFactor = 0.0001f;
-        pitchInterpolationFactor = 0.0001f;
+        volumeInterpolationFactor = 0.01f;
+        pitchInterpolationFactor = 0.01f;
         
         SndfileHandle file;
-        file = SndfileHandle("/Users/etienne/Dev/of_v0.8.3_osx_release/apps/myApps/ofForest/bin/data/fx.wav");
+        // https://www.freesound.org/people/danbert75/sounds/223248/
+        file = SndfileHandle("/Users/viking/Dev/of_v0.8.3_osx_release/apps/myApps/offorest/bin/data/fx.wav");
         int numFrames = file.frames();
         
         float buffer [numFrames]; // will be destroyed when it falls out of scope
@@ -48,6 +49,8 @@ namespace Sonify {
         source.pitch = 1.f;
         source.position = 0;
         sources.push_back(source);
+        
+        if (sources.size() > 40) return;
     
         for (int i = 0, len = tree->childs.size(); i < len; i++){
             addSources(tree->childs[i]);
@@ -70,8 +73,8 @@ namespace Sonify {
         
         Kinematic::ChainElement * elt = &(source.chain->elements[source.chain->elementIndex]);
         float dJoint = abs(elt->joint - elt->prevJoint);
-        float targetVolume = min(.1f, dJoint * 100);
-        float targetPitch = min(2.f, 0.5f + dJoint * 8.f);
+        float targetVolume = min(.8f, dJoint * 1000);
+        float targetPitch = min(2.f, 0.5f + dJoint * 100.f);
         
         
         for (int i = 0; i < bufferSize; i++){

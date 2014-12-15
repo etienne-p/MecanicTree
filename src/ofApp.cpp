@@ -1,5 +1,6 @@
 #include "ofApp.h"
 
+
 //--------------------------------------------------------------
 void ofApp::setup(){
     
@@ -10,6 +11,7 @@ void ofApp::setup(){
     branchDepth = 3;
     branchAngleOffset = .4f;
     
+    buffer = new RingBuffer<float>(1024);
     audioGenerator = new AudioGenerator();
     
     makeTree();
@@ -143,6 +145,12 @@ void ofApp::addBranches(TreeNode * tree, float dAngle, int jointCount, float len
 void ofApp::update(){
     //for (int i = 0; i < 8; i++) tree->update();
     tree->update();
+    
+    int bufferSize = buffer->GetWriteAvail();
+    float * tmpBuffer = new float[bufferSize];
+    audioGenerator->process(tmpBuffer, bufferSize, 2);
+    buffer->Write(tmpBuffer, bufferSize);
+    delete[] tmpBuffer;
 }
 
 //--------------------------------------------------------------
@@ -198,10 +206,16 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 void ofApp::audioRequested(float *output, int bufferSize, int nChannels){
-	audioGenerator->process(output, bufferSize, nChannels);
+    //audioGenerator->process(output, bufferSize, nChannels);
+    buffer->Read(output, min(bufferSize, buffer->GetReadAvail()));
 }
 
 //--------------------------------------------------------------
 void ofApp::audioReceived(float * input,int bufferSize,int nChannels){
     
+}
+
+//--------------------------------------------------------------
+void ofApp::exit(){
+    delete gui;
 }

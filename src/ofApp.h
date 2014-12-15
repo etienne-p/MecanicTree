@@ -4,6 +4,7 @@
 #include "Tree.h"
 #include "Sonify.h"
 #include "ofxUI.h"
+#include "RingBuffer.h"
 
 using namespace Kinematic;
 using namespace Sonify;
@@ -15,6 +16,7 @@ public:
     void setup();
     void update();
     void draw();
+    void exit();
     
     void keyPressed(int key);
     void keyReleased(int key);
@@ -48,6 +50,7 @@ public:
     void audioRequested(float * output, int bufferSize, int nChannels);
     void audioReceived(float * input, int bufferSize, int nChannels);
     ofSoundStream soundStream;
+    RingBuffer<float> * buffer;
 
     
 };
