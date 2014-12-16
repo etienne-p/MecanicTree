@@ -11,7 +11,7 @@ void ofApp::setup(){
     branchDepth = 3;
     branchAngleOffset = .4f;
     
-    buffer = new RingBuffer<float>(1024);
+    buffer = new RingBuffer<float>(2048);
     audioGenerator = new AudioGenerator();
     
     makeTree();
@@ -146,10 +146,14 @@ void ofApp::update(){
     //for (int i = 0; i < 8; i++) tree->update();
     tree->update();
     
-    int bufferSize = buffer->GetWriteAvail();
+    
+    // for audioGenerator, buffersize represents the number of samples per channel
+    // while the ringbuffer isn't aware of channels
+    
+    int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
     float * tmpBuffer = new float[bufferSize];
-    audioGenerator->process(tmpBuffer, bufferSize, 2);
-    buffer->Write(tmpBuffer, bufferSize);
+    audioGenerator->process(tmpBuffer, bufferSize / 2, 2);
+    buffer->write(tmpBuffer, bufferSize);
     delete[] tmpBuffer;
 }
 
@@ -206,8 +210,10 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 void ofApp::audioRequested(float *output, int bufferSize, int nChannels){
-    //audioGenerator->process(output, bufferSize, nChannels);
-    buffer->Read(output, min(bufferSize, buffer->GetReadAvail()));
+    if (bufferSize * nChannels > buffer->getReadAvail()){
+        ofLogNotice("Audio buffer underflow!");
+    }
+    buffer->read(output, min(bufferSize * nChannels, buffer->getReadAvail()));
 }
 
 //--------------------------------------------------------------

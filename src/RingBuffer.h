@@ -18,14 +18,14 @@ template <typename T>
 class RingBuffer{
     
 public:
-    RingBuffer( int size );
+    RingBuffer(int size);
     ~RingBuffer();
-    int Read(T * dataPtr, int numSamples);
-    int Write(T * dataPtr, int numSamples);
-    bool Empty( void );
-    int GetSize( );
-    int GetWriteAvail( );
-    int GetReadAvail( );
+    int read(T * dataPtr, int numSamples);
+    int write(T * dataPtr, int numSamples);
+    bool isEmpty();
+    int getSize();
+    int getWriteAvail();
+    int getReadAvail();
     
 private:
     T * _data;
@@ -34,9 +34,6 @@ private:
     int _writePtr;
     int _writeSamplesAvail;
 };
-
-// turns out .cpp file should not be used
-// http://stackoverflow.com/questions/1639797/template-issue-causes-linker-error-c
 
 template <typename T>
 RingBuffer<T>::RingBuffer(int size) {
@@ -55,7 +52,7 @@ RingBuffer<T>::~RingBuffer() {
 
 // Set all data to 0 and flag buffer as empty.
 template <typename T>
-bool RingBuffer<T>::Empty() {
+bool RingBuffer<T>::isEmpty() {
     memset( _data, 0, _size * sizeof(T));
     _readPtr = 0;
     _writePtr = 0;
@@ -64,7 +61,7 @@ bool RingBuffer<T>::Empty() {
 }
 
 template <typename T>
-int RingBuffer<T>::Read(T * dataPtr, int numSamples) {
+int RingBuffer<T>::read(T * dataPtr, int numSamples) {
     
     // If there's nothing to read or no data available, then we can't read anything.
     if( dataPtr == 0 || numSamples <= 0 || _writeSamplesAvail == _size ){
@@ -96,7 +93,7 @@ int RingBuffer<T>::Read(T * dataPtr, int numSamples) {
 // Write to the ring buffer. Do not overwrite data that has not yet
 // been read.
 template <typename T>
-int RingBuffer<T>::Write(T * dataPtr, int numSamples) {
+int RingBuffer<T>::write(T * dataPtr, int numSamples) {
     // If there's nothing to write or no room available, we can't write anything.
     if( dataPtr == 0 || numSamples <= 0 || _writeSamplesAvail == 0 ){
         return 0;
@@ -123,17 +120,17 @@ int RingBuffer<T>::Write(T * dataPtr, int numSamples) {
 }
 
 template <typename T>
-int RingBuffer<T>::GetSize() {
+int RingBuffer<T>::getSize() {
     return _size;
 }
 
 template <typename T>
-int RingBuffer<T>::GetWriteAvail() {
+int RingBuffer<T>::getWriteAvail() {
     return _writeSamplesAvail;
 }
 
 template <typename T>
-int RingBuffer<T>::GetReadAvail() {
+int RingBuffer<T>::getReadAvail() {
     return _size - _writeSamplesAvail;
 }
 

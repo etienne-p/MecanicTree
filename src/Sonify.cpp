@@ -15,8 +15,8 @@ namespace Sonify {
 
     AudioGenerator::AudioGenerator(){
         
-        volumeInterpolationFactor = 0.01f;
-        pitchInterpolationFactor = 0.01f;
+        volumeInterpolationFactor = 0.0001f;
+        pitchInterpolationFactor = 0.0001f;
         
         SndfileHandle file;
         // https://www.freesound.org/people/danbert75/sounds/223248/
@@ -50,7 +50,7 @@ namespace Sonify {
         source.position = 0;
         sources.push_back(source);
         
-        if (sources.size() > 40) return;
+        if (sources.size() > 100) return;
     
         for (int i = 0, len = tree->childs.size(); i < len; i++){
             addSources(tree->childs[i]);
@@ -74,7 +74,7 @@ namespace Sonify {
         Kinematic::ChainElement * elt = &(source.chain->elements[source.chain->elementIndex]);
         float dJoint = abs(elt->joint - elt->prevJoint);
         float targetVolume = min(.8f, dJoint * 1000);
-        float targetPitch = min(2.f, 0.5f + dJoint * 100.f);
+        float targetPitch = min(2.f, 0.8f + dJoint * 100.f);
         
         
         for (int i = 0; i < bufferSize; i++){
