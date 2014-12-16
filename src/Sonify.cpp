@@ -17,6 +17,9 @@ namespace Sonify {
         
         volumeInterpolationFactor = 0.0001f;
         pitchInterpolationFactor = 0.0001f;
+        dJointToVolumeFactor = 1000;
+        dJointToPitchFactor = 100;
+        dJointToPitchOffset = .8f;
         
         SndfileHandle file;
         // https://www.freesound.org/people/danbert75/sounds/223248/
@@ -50,7 +53,7 @@ namespace Sonify {
         source.position = 0;
         sources.push_back(source);
         
-        if (sources.size() > 100) return;
+        //if (sources.size() > 100) return;
     
         for (int i = 0, len = tree->childs.size(); i < len; i++){
             addSources(tree->childs[i]);
@@ -72,10 +75,9 @@ namespace Sonify {
         float currentPosition = source.position;
         
         Kinematic::ChainElement * elt = &(source.chain->elements[source.chain->elementIndex]);
-        float dJoint = abs(elt->joint - elt->prevJoint);
-        float targetVolume = min(.8f, dJoint * 1000);
-        float targetPitch = min(2.f, 0.8f + dJoint * 100.f);
-        
+        float dJoint = abs(elt->velocity);
+        float targetVolume = min(1.0f, dJoint * dJointToVolumeFactor);
+        float targetPitch = min(2.f, dJointToPitchOffset + dJoint * dJointToPitchFactor);
         
         for (int i = 0; i < bufferSize; i++){
             int fpos = floorf(currentPosition);

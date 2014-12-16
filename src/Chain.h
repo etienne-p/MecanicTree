@@ -16,7 +16,7 @@ namespace Kinematic {
 struct ChainElement {
     float link;
     float joint;
-    float prevJoint;
+    //float prevJoint;
     float dof;
     float velocity;
 };

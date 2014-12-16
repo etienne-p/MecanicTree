@@ -32,6 +32,9 @@ public:
     
     float volumeInterpolationFactor;
     float pitchInterpolationFactor;
+    float dJointToVolumeFactor;
+    float dJointToPitchFactor;
+    float dJointToPitchOffset;
     
     AudioGenerator();
     void clearSources();

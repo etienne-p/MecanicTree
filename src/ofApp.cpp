@@ -58,6 +58,15 @@ void ofApp::setupUI(){
     gui->addSlider("DOF_DECREASE_FACTOR", 0.f, 1.f,tree->dofDecreaseFactor);
     gui->addIntSlider("MAX_UPDATES_PER_JOINT", 1, 32, tree->maxUpdatesPerJoint);
     
+    // Audio Parameters
+    gui->addSpacer();
+    gui->addLabel("BRANCH");
+    gui->addSlider("VOL_INTERP_FACTOR", 0.f, 0.001f, audioGenerator->volumeInterpolationFactor);
+    gui->addSlider("PITCH_INTERP_FACTOR", 0.f, 0.001f, audioGenerator->pitchInterpolationFactor);
+    gui->addSlider("JOINT_VOL_FACTOR", 0.f, 10000.f, audioGenerator->dJointToVolumeFactor);
+    gui->addSlider("JOINT_PITCH_FACTOR", 0.f, 10000.f, audioGenerator->dJointToPitchFactor);
+    gui->addSlider("JOINT_PITCH_OFFSET", 0.f, 4.f, audioGenerator->dJointToPitchOffset);
+    
     gui->autoSizeToFitWidgets();
         
     ofAddListener(gui->newGUIEvent, this, &ofApp::guiEvent);
@@ -115,6 +124,22 @@ void ofApp::guiEvent(ofxUIEventArgs &e){
         tree->setMaxUpdatesPerJoint(((ofxUIIntSlider*)e.getSlider())->getScaledValue());
     }
     
+    // Audio Params
+    else if(name == "VOL_INTERP_FACTOR"){
+        audioGenerator->volumeInterpolationFactor = (((ofxUISlider*)e.getSlider())->getScaledValue());
+    }
+    else if(name == "PITCH_INTERP_FACTOR"){
+        audioGenerator->pitchInterpolationFactor = (((ofxUISlider*)e.getSlider())->getScaledValue());
+    }
+    else if(name == "JOINT_VOL_FACTOR"){
+        audioGenerator->dJointToVolumeFactor = (((ofxUISlider*)e.getSlider())->getScaledValue());
+    }
+    else if(name == "JOINT_PITCH_FACTOR"){
+        audioGenerator->dJointToPitchFactor = (((ofxUISlider*)e.getSlider())->getScaledValue());
+    }
+    else if(name == "JOINT_PITCH_OFFSET"){
+        audioGenerator->dJointToPitchOffset = (((ofxUISlider*)e.getSlider())->getScaledValue());
+    }
 }
 
 //--------------------------------------------------------------
@@ -143,8 +168,8 @@ void ofApp::addBranches(TreeNode * tree, float dAngle, int jointCount, float len
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    //for (int i = 0; i < 8; i++) tree->update();
-    tree->update();
+    for (int i = 0; i < 12; i++) tree->update();
+    //tree->update();
     
     
     // for audioGenerator, buffersize represents the number of samples per channel
