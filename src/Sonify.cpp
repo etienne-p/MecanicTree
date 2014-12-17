@@ -20,15 +20,8 @@ namespace Sonify {
         dJointToVolumeFactor = 50;
         dJointToPitchFactor = 50;
         dJointToPitchOffset = .8f;
+        buffer = NULL;
         
-        SndfileHandle file;
-        // https://www.freesound.org/people/danbert75/sounds/223248/
-        file = SndfileHandle("/Users/etienne/Dev/of_v0.8.3_osx_release/apps/myApps/offorest/bin/data/fx.wav");
-        bufferSize = file.frames();
-        
-        buffer = new float[bufferSize + 1]; // will be destroyed when it falls out of scope
-        file.read (buffer, bufferSize);
-        buffer[bufferSize] = buffer[0];
     }
     
     AudioGenerator::~AudioGenerator(){
@@ -37,6 +30,28 @@ namespace Sonify {
     
     void AudioGenerator::clearSources(){
         sources.clear();
+    }
+    
+    bool AudioGenerator::loadSample(string path){
+        
+        if (buffer != NULL) {
+            delete[] buffer;
+            bufferSize = 0;
+        }
+        
+        SndfileHandle file;
+        file = SndfileHandle(path);
+        
+        if (file.error() != 0){
+            ofLogError("AudioGenerator::loadSample [" + path + "] failed: " + file.strError());
+            return false;
+        }
+        
+        bufferSize = file.frames();
+        buffer = new float[bufferSize + 1];
+        file.read (buffer, bufferSize);
+        buffer[bufferSize] = buffer[0]; // simplifies sample reading code
+        return true;
     }
     
     void AudioGenerator::reset(Kinematic::Tree * tree){
@@ -59,6 +74,15 @@ namespace Sonify {
     }
     
     void AudioGenerator::process(float * output, int bufferSize, int nChannels){
+        
+        if (buffer == NULL || bufferSize < 1){
+            ofLogError("AudioGenerator::process called before a sample was loaded (use AudioGenerator::loadSample)");
+            for (int i = 0; i < bufferSize; i++){
+                output[i * nChannels] = output[i * nChannels + 1] = 0;
+            }
+            return;
+        }
+        
         float * monoOutput = new float[bufferSize];
         for (int i = 0; i < bufferSize; i++) monoOutput[i] = 0;
         for (int i = 0, len = sources.size(); i < len; i++){

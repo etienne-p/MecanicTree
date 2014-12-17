@@ -14,6 +14,7 @@ void ofApp::setup(){
     
     buffer = new RingBuffer<float>(4096);
     audioGenerator = new AudioGenerator();
+    audioGenerator->loadSample(ofToDataPath("fx.wav"));
     
     makeTree();
     setupUI();

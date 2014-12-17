@@ -39,6 +39,7 @@ public:
     
     AudioGenerator();
     ~AudioGenerator();
+    bool loadSample(string path);
     void clearSources();
     void reset(Kinematic::Tree * tree);
     void addSources(Kinematic::Tree * tree);
