@@ -33,7 +33,7 @@ public:
     int parentJointOffset;
     int branchDepth;
     float branchAngleOffset;
-    
+    int kinematicUpdateRate;
     
     Tree * tree;
     void makeTree();

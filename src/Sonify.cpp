@@ -17,22 +17,22 @@ namespace Sonify {
         
         volumeInterpolationFactor = 0.0001f;
         pitchInterpolationFactor = 0.0001f;
-        dJointToVolumeFactor = 1000;
-        dJointToPitchFactor = 100;
+        dJointToVolumeFactor = 50;
+        dJointToPitchFactor = 50;
         dJointToPitchOffset = .8f;
         
         SndfileHandle file;
         // https://www.freesound.org/people/danbert75/sounds/223248/
-        file = SndfileHandle("/Users/viking/Dev/of_v0.8.3_osx_release/apps/myApps/offorest/bin/data/fx.wav");
-        int numFrames = file.frames();
+        file = SndfileHandle("/Users/etienne/Dev/of_v0.8.3_osx_release/apps/myApps/offorest/bin/data/fx.wav");
+        bufferSize = file.frames();
         
-        float buffer [numFrames]; // will be destroyed when it falls out of scope
-        file.read (buffer, numFrames);
-        
-        for (int i = 0; i < numFrames; i++){
-            sourceBuffer.push_back(buffer[i]); // TODO: best way?
-        }
-        sourceBuffer.push_back(buffer[0]);
+        buffer = new float[bufferSize + 1]; // will be destroyed when it falls out of scope
+        file.read (buffer, bufferSize);
+        buffer[bufferSize] = buffer[0];
+    }
+    
+    AudioGenerator::~AudioGenerator(){
+        delete[] buffer;
     }
     
     void AudioGenerator::clearSources(){
@@ -50,25 +50,29 @@ namespace Sonify {
         source.chain = tree;
         source.volume = 0;
         source.pitch = 1.f;
-        source.position = 0;
+        source.position = ofRandom(bufferSize - 1);
         sources.push_back(source);
         
-        //if (sources.size() > 100) return;
-    
         for (int i = 0, len = tree->childs.size(); i < len; i++){
             addSources(tree->childs[i]);
         }
     }
     
     void AudioGenerator::process(float * output, int bufferSize, int nChannels){
+        float * monoOutput = new float[bufferSize];
+        for (int i = 0; i < bufferSize; i++) monoOutput[i] = 0;
         for (int i = 0, len = sources.size(); i < len; i++){
-            processSource(output, bufferSize, nChannels, sources[i]);
+            processSource(monoOutput, bufferSize, sources[i]);
         }
+        for (int i = 0; i < bufferSize; i++){
+            output[i * nChannels] = output[i * nChannels + 1] = monoOutput[i];
+        }
+        delete[] monoOutput;
     }
 
-    void AudioGenerator::processSource(float * output, int bufferSize, int nChannels, AudioSourceData& source){
+    void AudioGenerator::processSource(float * output, int bufferSize, AudioSourceData& source){
         
-        int len = sourceBuffer.size() - 1;
+        int len = bufferSize - 1;
         float alpha = 0;
         float currentPitch = source.pitch;
         float currentVolume = source.volume;
@@ -82,9 +86,9 @@ namespace Sonify {
         for (int i = 0; i < bufferSize; i++){
             int fpos = floorf(currentPosition);
             alpha = currentPosition - fpos;
-            float sample = 0.5 * (alpha * sourceBuffer[fpos] + (1 - alpha) * sourceBuffer[fpos + 1]);
+            float sample = 0.5 * (alpha * buffer[fpos] + (1 - alpha) * buffer[fpos + 1]);
             currentVolume += volumeInterpolationFactor * (targetVolume - currentVolume);
-            output[i * nChannels] = output[i * nChannels + 1] = sample * currentVolume;
+            output[i] += sample * currentVolume;
             currentPitch += pitchInterpolationFactor * (targetPitch - currentPitch);
             currentPosition = fmod(len + currentPosition + currentPitch, len);
         }

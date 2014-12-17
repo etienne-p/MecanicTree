@@ -28,7 +28,8 @@ class AudioGenerator{
 public:
     
     vector<AudioSourceData> sources;
-    vector<float> sourceBuffer;
+    float * buffer;
+    int bufferSize;
     
     float volumeInterpolationFactor;
     float pitchInterpolationFactor;
@@ -37,11 +38,12 @@ public:
     float dJointToPitchOffset;
     
     AudioGenerator();
+    ~AudioGenerator();
     void clearSources();
     void reset(Kinematic::Tree * tree);
     void addSources(Kinematic::Tree * tree);
     void process(float * output, int bufferSize, int nChannels);
-    void processSource(float * output, int bufferSize, int nChannels, AudioSourceData& source);
+    void processSource(float * output, int bufferSize, AudioSourceData& source);
 };
     
 };

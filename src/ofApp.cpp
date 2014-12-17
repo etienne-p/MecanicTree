@@ -10,8 +10,9 @@ void ofApp::setup(){
     parentJointOffset = 2;
     branchDepth = 3;
     branchAngleOffset = .4f;
+    kinematicUpdateRate = 1;
     
-    buffer = new RingBuffer<float>(2048);
+    buffer = new RingBuffer<float>(4096);
     audioGenerator = new AudioGenerator();
     
     makeTree();
@@ -39,6 +40,12 @@ void ofApp::setupUI(){
     
     gui = new ofxUICanvas();
     
+    
+    // APP Parameters (they require a tree rebuild)
+    gui->addSpacer();
+    gui->addLabel("APP");
+    gui->addIntSlider("PHYSICS_UPDATE_RATE", 1, 32, kinematicUpdateRate);
+    
     // Tree Parameters (they require a tree rebuild)
     gui->addSpacer();
     gui->addLabel("TREE");
@@ -60,11 +67,11 @@ void ofApp::setupUI(){
     
     // Audio Parameters
     gui->addSpacer();
-    gui->addLabel("BRANCH");
+    gui->addLabel("AUDIO");
     gui->addSlider("VOL_INTERP_FACTOR", 0.f, 0.001f, audioGenerator->volumeInterpolationFactor);
     gui->addSlider("PITCH_INTERP_FACTOR", 0.f, 0.001f, audioGenerator->pitchInterpolationFactor);
-    gui->addSlider("JOINT_VOL_FACTOR", 0.f, 10000.f, audioGenerator->dJointToVolumeFactor);
-    gui->addSlider("JOINT_PITCH_FACTOR", 0.f, 10000.f, audioGenerator->dJointToPitchFactor);
+    gui->addSlider("JOINT_VOL_FACTOR", 0.f, 100, audioGenerator->dJointToVolumeFactor);
+    gui->addSlider("JOINT_PITCH_FACTOR", 0.f, 100, audioGenerator->dJointToPitchFactor);
     gui->addSlider("JOINT_PITCH_OFFSET", 0.f, 4.f, audioGenerator->dJointToPitchOffset);
     
     gui->autoSizeToFitWidgets();
@@ -77,8 +84,13 @@ void ofApp::guiEvent(ofxUIEventArgs &e){
     
     string name = e.getName();
     
+    // App Params
+    if (name == "PHYSICS_UPDATE_RATE"){
+        kinematicUpdateRate = ((ofxUIIntSlider*)e.getSlider())->getScaledValue();
+    }
+    
     // Tree Params
-    if (name == "ROOT_NODE_COUNT"){
+    else if (name == "ROOT_NODE_COUNT"){
         rootNodeCount = ((ofxUIIntSlider*)e.getSlider())->getScaledValue();
         makeTree();
         syncBranchesParamsOnGui();
@@ -168,9 +180,7 @@ void ofApp::addBranches(TreeNode * tree, float dAngle, int jointCount, float len
 
 //--------------------------------------------------------------
 void ofApp::update(){
-    for (int i = 0; i < 12; i++) tree->update();
-    //tree->update();
-    
+    for (int i = 0; i < kinematicUpdateRate; i++) tree->update();
     
     // for audioGenerator, buffersize represents the number of samples per channel
     // while the ringbuffer isn't aware of channels
