@@ -20,12 +20,9 @@ namespace Sonify {
         dJointToVolumeFactor = 50;
         dJointToPitchFactor = 50;
         dJointToPitchOffset = .8f;
-        buffer = NULL;
-        
-    }
+        volume = 1;    }
     
     AudioGenerator::~AudioGenerator(){
-        delete[] buffer;
     }
     
     void AudioGenerator::clearSources(){
@@ -34,10 +31,7 @@ namespace Sonify {
     
     bool AudioGenerator::loadSample(string path){
         
-        if (buffer != NULL) {
-            delete[] buffer;
-            bufferSize = 0;
-        }
+        buffer.clear();
         
         SndfileHandle file;
         file = SndfileHandle(path);
@@ -47,10 +41,12 @@ namespace Sonify {
             return false;
         }
         
-        bufferSize = file.frames();
-        buffer = new float[bufferSize + 1];
-        file.read (buffer, bufferSize);
-        buffer[bufferSize] = buffer[0]; // simplifies sample reading code
+        int bufferSize = file.frames();
+        float tmp[bufferSize];
+        file.read (tmp, bufferSize);
+        for (int i = 0; i < bufferSize; i++){
+            buffer.push_back(tmp[i]);
+        }
         return true;
     }
     
@@ -65,7 +61,7 @@ namespace Sonify {
         source.chain = tree;
         source.volume = 0;
         source.pitch = 1.f;
-        source.position = ofRandom(bufferSize - 1);
+        source.position = 0;
         sources.push_back(source);
         
         for (int i = 0, len = tree->childs.size(); i < len; i++){
@@ -75,28 +71,25 @@ namespace Sonify {
     
     void AudioGenerator::process(float * output, int bufferSize, int nChannels){
         
-        if (buffer == NULL || bufferSize < 1){
+        if (buffer.size() < 1){
             ofLogError("AudioGenerator::process called before a sample was loaded (use AudioGenerator::loadSample)");
-            for (int i = 0; i < bufferSize; i++){
-                output[i * nChannels] = output[i * nChannels + 1] = 0;
-            }
+            memset(output, 0, sizeof(float) * bufferSize * nChannels);
             return;
         }
         
-        float * monoOutput = new float[bufferSize];
-        for (int i = 0; i < bufferSize; i++) monoOutput[i] = 0;
-        for (int i = 0, len = sources.size(); i < len; i++){
+        float monoOutput[bufferSize];
+        memset(monoOutput, 0, sizeof(float) * bufferSize);
+        for (int i = 0, len = sources.size(); i < 1; i++){
             processSource(monoOutput, bufferSize, sources[i]);
         }
         for (int i = 0; i < bufferSize; i++){
-            output[i * nChannels] = output[i * nChannels + 1] = monoOutput[i];
+            output[i * 2] = output[i * 2 + 1] = monoOutput[i] * volume;
         }
-        delete[] monoOutput;
     }
 
     void AudioGenerator::processSource(float * output, int bufferSize, AudioSourceData& source){
         
-        int len = bufferSize - 1;
+        int sourceBufferSize = buffer.size();
         float alpha = 0;
         float currentPitch = source.pitch;
         float currentVolume = source.volume;
@@ -108,13 +101,13 @@ namespace Sonify {
         float targetPitch = min(2.f, dJointToPitchOffset + dJoint * dJointToPitchFactor);
         
         for (int i = 0; i < bufferSize; i++){
-            int fpos = floorf(currentPosition);
+            float fpos = floorf(currentPosition);
             alpha = currentPosition - fpos;
-            float sample = 0.5 * (alpha * buffer[fpos] + (1 - alpha) * buffer[fpos + 1]);
-            currentVolume += volumeInterpolationFactor * (targetVolume - currentVolume);
+            float sample = .5f * (alpha * buffer[(int)fpos] + (1.0f - alpha) * buffer[(int)(fpos + 1)]);
+            currentVolume = 1;// += volumeInterpolationFactor * (targetVolume - currentVolume);
             output[i] += sample * currentVolume;
-            currentPitch += pitchInterpolationFactor * (targetPitch - currentPitch);
-            currentPosition = fmod(len + currentPosition + currentPitch, len);
+            currentPitch = 1;//+= pitchInterpolationFactor * (targetPitch - currentPitch);
+            currentPosition = fmod(currentPosition + currentPitch, sourceBufferSize);
         }
         
         source.position = currentPosition;

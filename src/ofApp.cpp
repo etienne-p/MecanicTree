@@ -1,5 +1,6 @@
 #include "ofApp.h"
 
+// TODO: add konami code to display / hide UI
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -14,7 +15,7 @@ void ofApp::setup(){
     
     buffer = new RingBuffer<float>(4096);
     audioGenerator = new AudioGenerator();
-    audioGenerator->loadSample(ofToDataPath("fx.wav"));
+    audioGenerator->loadSample(ofToDataPath("sine.wav"));
     
     makeTree();
     setupUI();
@@ -69,13 +70,15 @@ void ofApp::setupUI(){
     // Audio Parameters
     gui->addSpacer();
     gui->addLabel("AUDIO");
-    gui->addSlider("VOL_INTERP_FACTOR", 0.f, 0.001f, audioGenerator->volumeInterpolationFactor);
-    gui->addSlider("PITCH_INTERP_FACTOR", 0.f, 0.001f, audioGenerator->pitchInterpolationFactor);
-    gui->addSlider("JOINT_VOL_FACTOR", 0.f, 100, audioGenerator->dJointToVolumeFactor);
-    gui->addSlider("JOINT_PITCH_FACTOR", 0.f, 100, audioGenerator->dJointToPitchFactor);
-    gui->addSlider("JOINT_PITCH_OFFSET", 0.f, 4.f, audioGenerator->dJointToPitchOffset);
+    gui->addSlider("VOL_INTERP_FACTOR", 0, 0.001f, audioGenerator->volumeInterpolationFactor);
+    gui->addSlider("PITCH_INTERP_FACTOR", 0, 0.001f, audioGenerator->pitchInterpolationFactor);
+    gui->addSlider("JOINT_VOL_FACTOR", 0, 400, audioGenerator->dJointToVolumeFactor);
+    gui->addSlider("JOINT_PITCH_FACTOR", 0, 400, audioGenerator->dJointToPitchFactor);
+    gui->addSlider("JOINT_PITCH_OFFSET", 0, 4.f, audioGenerator->dJointToPitchOffset);
+    gui->addSlider("VOLUME", 0, 10, audioGenerator->volume);
     
     gui->autoSizeToFitWidgets();
+    gui->loadSettings("settings.xml");
         
     ofAddListener(gui->newGUIEvent, this, &ofApp::guiEvent);
 }
@@ -153,6 +156,9 @@ void ofApp::guiEvent(ofxUIEventArgs &e){
     else if(name == "JOINT_PITCH_OFFSET"){
         audioGenerator->dJointToPitchOffset = (((ofxUISlider*)e.getSlider())->getScaledValue());
     }
+    else if(name == "VOLUME"){
+        audioGenerator->volume = (((ofxUISlider*)e.getSlider())->getScaledValue());
+    }
 }
 
 //--------------------------------------------------------------
@@ -186,11 +192,11 @@ void ofApp::update(){
     // for audioGenerator, buffersize represents the number of samples per channel
     // while the ringbuffer isn't aware of channels
     
-    int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
+    /*int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
     float * tmpBuffer = new float[bufferSize];
     audioGenerator->process(tmpBuffer, bufferSize / 2, 2);
     buffer->write(tmpBuffer, bufferSize);
-    delete[] tmpBuffer;
+    delete[] tmpBuffer;*/
 }
 
 //--------------------------------------------------------------
@@ -246,10 +252,11 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 void ofApp::audioRequested(float *output, int bufferSize, int nChannels){
-    if (bufferSize * nChannels > buffer->getReadAvail()){
+    /*if (bufferSize * nChannels > buffer->getReadAvail()){
         ofLogNotice("Audio buffer underflow!");
     }
-    buffer->read(output, min(bufferSize * nChannels, buffer->getReadAvail()));
+    buffer->read(output, min(bufferSize * nChannels, buffer->getReadAvail()));*/
+    audioGenerator->process(output, bufferSize, nChannels);
 }
 
 //--------------------------------------------------------------
@@ -259,5 +266,6 @@ void ofApp::audioReceived(float * input,int bufferSize,int nChannels){
 
 //--------------------------------------------------------------
 void ofApp::exit(){
+    gui->saveSettings("settings.xml");
     delete gui;
 }

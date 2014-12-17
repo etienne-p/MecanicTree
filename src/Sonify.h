@@ -28,8 +28,8 @@ class AudioGenerator{
 public:
     
     vector<AudioSourceData> sources;
-    float * buffer;
-    int bufferSize;
+    vector<float> buffer;
+    float volume;
     
     float volumeInterpolationFactor;
     float pitchInterpolationFactor;
