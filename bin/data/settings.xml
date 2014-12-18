@@ -21,7 +21,7 @@
 <Widget>
     <Kind>42</Kind>
     <Name>BRANCH_DEPTH</Name>
-    <Value>3</Value>
+    <Value>5</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -36,7 +36,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>AWAKE_DISTANCE</Name>
-    <Value>180.295562744</Value>
+    <Value>70.935958862</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -46,12 +46,12 @@
 <Widget>
     <Kind>4</Kind>
     <Name>DOF_BASE_VALUE</Name>
-    <Value>1.339901447</Value>
+    <Value>1.497536898</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>DOF_DECREASE_FACTOR</Name>
-    <Value>0.458128065</Value>
+    <Value>0.600985229</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -61,30 +61,30 @@
 <Widget>
     <Kind>4</Kind>
     <Name>VOL_INTERP_FACTOR</Name>
-    <Value>0.000100000</Value>
+    <Value>0.000029557</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>PITCH_INTERP_FACTOR</Name>
-    <Value>0.000103448</Value>
+    <Value>0.000980296</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_VOL_FACTOR</Name>
-    <Value>305.418731689</Value>
+    <Value>354.679809570</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_PITCH_FACTOR</Name>
-    <Value>378.325134277</Value>
+    <Value>273.891601562</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_PITCH_OFFSET</Name>
-    <Value>0.059113301</Value>
+    <Value>0.394088656</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>VOLUME</Name>
-    <Value>5.911330223</Value>
+    <Value>4.581280708</Value>
 </Widget>

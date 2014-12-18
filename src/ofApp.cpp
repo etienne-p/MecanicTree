@@ -15,12 +15,19 @@ void ofApp::setup(){
     
     buffer = new RingBuffer<float>(4096);
     audioGenerator = new AudioGenerator();
-    audioGenerator->loadSample(ofToDataPath("sine.wav"));
+    audioGenerator->loadSample(ofToDataPath("fx.wav"));
     
     makeTree();
     setupUI();
     
     soundStream.setup(this, 2, 0, 44100, 256, 4);
+    
+    vector<int> v;
+    v.push_back(103);
+    v.push_back(117);
+    v.push_back(105);
+    v.push_back(357);
+    guiCode.setCode(v);
 }
 
 void ofApp::makeTree(){
@@ -78,9 +85,13 @@ void ofApp::setupUI(){
     gui->addSlider("VOLUME", 0, 10, audioGenerator->volume);
     
     gui->autoSizeToFitWidgets();
-    gui->loadSettings("settings.xml");
+    
         
     ofAddListener(gui->newGUIEvent, this, &ofApp::guiEvent);
+    gui->loadSettings("settings.xml");
+    
+    
+    //gui->disable();
 }
 
 //--------------------------------------------------------------
@@ -189,14 +200,11 @@ void ofApp::addBranches(TreeNode * tree, float dAngle, int jointCount, float len
 void ofApp::update(){
     for (int i = 0; i < kinematicUpdateRate; i++) tree->update();
     
-    // for audioGenerator, buffersize represents the number of samples per channel
-    // while the ringbuffer isn't aware of channels
-    
-    /*int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
+    int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
     float * tmpBuffer = new float[bufferSize];
     audioGenerator->process(tmpBuffer, bufferSize / 2, 2);
     buffer->write(tmpBuffer, bufferSize);
-    delete[] tmpBuffer;*/
+    delete[] tmpBuffer;
 }
 
 //--------------------------------------------------------------
@@ -206,7 +214,10 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
-
+    if(guiCode.pushKey(key)){
+        gui->enable();
+    }
+    
 }
 
 //--------------------------------------------------------------
@@ -252,11 +263,10 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 //--------------------------------------------------------------
 void ofApp::audioRequested(float *output, int bufferSize, int nChannels){
-    /*if (bufferSize * nChannels > buffer->getReadAvail()){
+    if (bufferSize * nChannels > buffer->getReadAvail()){
         ofLogNotice("Audio buffer underflow!");
     }
-    buffer->read(output, min(bufferSize * nChannels, buffer->getReadAvail()));*/
-    audioGenerator->process(output, bufferSize, nChannels);
+    buffer->read(output, min(bufferSize * nChannels, buffer->getReadAvail()));
 }
 
 //--------------------------------------------------------------

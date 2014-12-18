@@ -67,6 +67,7 @@
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
 		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		E4FFD44B1A4343FF004874ED /* KonamiCode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFD4491A4343FF004874ED /* KonamiCode.cpp */; };
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
 		E7F985F815E0DEA3003869B5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7F985F515E0DE99003869B5 /* Accelerate.framework */; };
@@ -229,6 +230,8 @@
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		E4FFD4491A4343FF004874ED /* KonamiCode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KonamiCode.cpp; sourceTree = "<group>"; };
+		E4FFD44A1A4343FF004874ED /* KonamiCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonamiCode.h; sourceTree = "<group>"; };
 		E6280B5FA1CEA20450916E49 /* ofxUIImageButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxUIImageButton.cpp; path = ../../../addons/ofxUI/src/ofxUIImageButton.cpp; sourceTree = SOURCE_ROOT; };
 		E65D547C2CD6A84FC9AF15FA /* ofxUITextInput.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxUITextInput.h; path = ../../../addons/ofxUI/src/ofxUITextInput.h; sourceTree = SOURCE_ROOT; };
 		E67BC70E17DDA0081C8FD9DD /* ofxUIImageButton.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxUIImageButton.h; path = ../../../addons/ofxUI/src/ofxUIImageButton.h; sourceTree = SOURCE_ROOT; };
@@ -550,6 +553,8 @@
 				8FE720BE1A3CDCCA004C10EA /* Sonify.cpp */,
 				8FE720BF1A3CDCCA004C10EA /* Sonify.h */,
 				E485ABEA1A3F93300016A703 /* RingBuffer.h */,
+				E4FFD4491A4343FF004874ED /* KonamiCode.cpp */,
+				E4FFD44A1A4343FF004874ED /* KonamiCode.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -699,6 +704,7 @@
 				F8D05F7C7F785CE323983B47 /* ofxUITextInput.cpp in Sources */,
 				04C82720B149CE576B8CBB06 /* ofxUIToggle.cpp in Sources */,
 				E3A1109F67D711D6C256031E /* ofxUIToggleMatrix.cpp in Sources */,
+				E4FFD44B1A4343FF004874ED /* KonamiCode.cpp in Sources */,
 				60012C723B05938A3D388335 /* ofxUIValuePlotter.cpp in Sources */,
 				AE281BEBF3A00F1FC37F3DA0 /* ofxUIWaveform.cpp in Sources */,
 				82845E1F8C90E1F5A99D9868 /* ofxUIWidget.cpp in Sources */,

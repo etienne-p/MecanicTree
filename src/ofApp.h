@@ -5,6 +5,7 @@
 #include "Sonify.h"
 #include "ofxUI.h"
 #include "RingBuffer.h"
+#include "KonamiCode.h"
 
 using namespace Kinematic;
 using namespace Sonify;
@@ -51,6 +52,8 @@ public:
     void audioReceived(float * input, int bufferSize, int nChannels);
     ofSoundStream soundStream;
     RingBuffer<float> * buffer;
-
+    
+    KonamiCode guiCode;
+    
     
 };

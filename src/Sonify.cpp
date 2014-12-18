@@ -44,8 +44,9 @@ namespace Sonify {
         int bufferSize = file.frames();
         float tmp[bufferSize];
         file.read (tmp, bufferSize);
+        buffer.resize(bufferSize);
         for (int i = 0; i < bufferSize; i++){
-            buffer.push_back(tmp[i]);
+            buffer[i] = tmp[i];
         }
         return true;
     }
@@ -79,7 +80,7 @@ namespace Sonify {
         
         float monoOutput[bufferSize];
         memset(monoOutput, 0, sizeof(float) * bufferSize);
-        for (int i = 0, len = sources.size(); i < 1; i++){
+        for (int i = 0, len = sources.size(); i < len; i++){
             processSource(monoOutput, bufferSize, sources[i]);
         }
         for (int i = 0; i < bufferSize; i++){
@@ -104,9 +105,9 @@ namespace Sonify {
             float fpos = floorf(currentPosition);
             alpha = currentPosition - fpos;
             float sample = .5f * (alpha * buffer[(int)fpos] + (1.0f - alpha) * buffer[(int)(fpos + 1)]);
-            currentVolume = 1;// += volumeInterpolationFactor * (targetVolume - currentVolume);
+            currentVolume += volumeInterpolationFactor * (targetVolume - currentVolume);
             output[i] += sample * currentVolume;
-            currentPitch = 1;//+= pitchInterpolationFactor * (targetPitch - currentPitch);
+            currentPitch += pitchInterpolationFactor * (targetPitch - currentPitch);
             currentPosition = fmod(currentPosition + currentPitch, sourceBufferSize);
         }
         
