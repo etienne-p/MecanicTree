@@ -67,6 +67,7 @@
 		E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424510CC5A17004149E2 /* Cocoa.framework */; };
 		E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4C2424610CC5A17004149E2 /* IOKit.framework */; };
 		E4EB6799138ADC1D00A09F29 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
+		E4F2DCE91A44D5A8003FB014 /* ChainMesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4F2DCE71A44D5A8003FB014 /* ChainMesh.cpp */; };
 		E4FFD44B1A4343FF004874ED /* KonamiCode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E4FFD4491A4343FF004874ED /* KonamiCode.cpp */; };
 		E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E415D3B63C0020DFD4 /* CoreVideo.framework */; };
 		E7E077E815D3B6510020DFD4 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E7E077E715D3B6510020DFD4 /* QTKit.framework */; };
@@ -230,6 +231,8 @@
 		E4C2424610CC5A17004149E2 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		E4EB691F138AFCF100A09F29 /* CoreOF.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = CoreOF.xcconfig; path = ../../../libs/openFrameworksCompiled/project/osx/CoreOF.xcconfig; sourceTree = SOURCE_ROOT; };
 		E4EB6923138AFD0F00A09F29 /* Project.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Project.xcconfig; sourceTree = "<group>"; };
+		E4F2DCE71A44D5A8003FB014 /* ChainMesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ChainMesh.cpp; sourceTree = "<group>"; };
+		E4F2DCE81A44D5A8003FB014 /* ChainMesh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChainMesh.h; sourceTree = "<group>"; };
 		E4FFD4491A4343FF004874ED /* KonamiCode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KonamiCode.cpp; sourceTree = "<group>"; };
 		E4FFD44A1A4343FF004874ED /* KonamiCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KonamiCode.h; sourceTree = "<group>"; };
 		E6280B5FA1CEA20450916E49 /* ofxUIImageButton.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofxUIImageButton.cpp; path = ../../../addons/ofxUI/src/ofxUIImageButton.cpp; sourceTree = SOURCE_ROOT; };
@@ -555,6 +558,8 @@
 				E485ABEA1A3F93300016A703 /* RingBuffer.h */,
 				E4FFD4491A4343FF004874ED /* KonamiCode.cpp */,
 				E4FFD44A1A4343FF004874ED /* KonamiCode.h */,
+				E4F2DCE71A44D5A8003FB014 /* ChainMesh.cpp */,
+				E4F2DCE81A44D5A8003FB014 /* ChainMesh.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -660,6 +665,7 @@
 				63B57AC5BF4EF088491E0317 /* ofxXmlSettings.cpp in Sources */,
 				8F34C40A1A33A90900E35B38 /* Chain.cpp in Sources */,
 				933A2227713C720CEFF80FD9 /* tinyxml.cpp in Sources */,
+				E4F2DCE91A44D5A8003FB014 /* ChainMesh.cpp in Sources */,
 				9D44DC88EF9E7991B4A09951 /* tinyxmlerror.cpp in Sources */,
 				5A4349E9754D6FA14C0F2A3A /* tinyxmlparser.cpp in Sources */,
 				9F5C6DD965B4F3A6DB5B88F8 /* ofxUI2DGraph.cpp in Sources */,

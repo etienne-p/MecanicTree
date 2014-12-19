@@ -62,7 +62,7 @@ void AudioGenerator::addSources(Tree * tree){
     source.chain = tree;
     source.volume = 0;
     source.pitch = 1.f;
-    source.position = 1;
+    source.position = ofRandom(1.0f, buffer.size() - 1.0f);
     sources.push_back(source);
     
     for (int i = 0, len = tree->childs.size(); i < len; i++){
@@ -93,7 +93,7 @@ void AudioGenerator::processSource(float * output, int bufferSize, AudioSourceDa
     const float sourceBufferSizeMinus2 = buffer.size() - 2.0f;
     float currentPitch = source.pitch;
     float currentVolume = source.volume;
-    float currentPosition = max(1.0f, source.position);
+    float currentPosition = min(max(1.0f, source.position), sourceBufferSizeMinus2 + 1.0f);
     
     ChainElement * elt = &(source.chain->elements[source.chain->elementIndex]);
     float dJoint = abs(elt->velocity);
