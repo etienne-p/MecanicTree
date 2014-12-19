@@ -12,8 +12,6 @@
 #include "ofMain.h"
 #include "Chain.h"
 
-namespace Kinematic {
-    
 class TreeNode : public Chain {
     
 public:
@@ -43,7 +41,5 @@ public:
 };
     
 typedef TreeNode Tree;
-    
-}
 
 #endif /* defined(__ofForest__Tree__) */

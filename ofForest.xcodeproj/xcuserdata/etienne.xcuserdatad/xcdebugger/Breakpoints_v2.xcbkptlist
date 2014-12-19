@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "src/Sonify.cpp"
-            timestampString = "440472072.312324"
+            timestampString = "440648688.628002"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "78"
             endingLineNumber = "78"
-            landmarkName = "AudioGenerator::processSource(float * output, int bufferSize, AudioSourceData&amp; source)"
+            landmarkName = "AudioGenerator::process(float * output, int bufferSize, int nChannels)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

@@ -14,10 +14,8 @@
 #include "Tree.h"
 #include <sndfile.hh>
 
-namespace Sonify {
-    
 struct AudioSourceData {
-    Kinematic::Chain * chain;
+    Chain * chain;
     float volume;
     float pitch;
     float position;
@@ -41,13 +39,13 @@ public:
     ~AudioGenerator();
     bool loadSample(string path);
     void clearSources();
-    void reset(Kinematic::Tree * tree);
-    void addSources(Kinematic::Tree * tree);
+    void reset(Tree * tree);
+    void addSources(Tree * tree);
     void process(float * output, int bufferSize, int nChannels);
     void processSource(float * output, int bufferSize, AudioSourceData& source);
-};
     
+    // http://stackoverflow.com/questions/1125666/how-do-you-do-bicubic-or-other-non-linear-interpolation-of-re-sampled-audio-da
+    static float InterpolateHermite4pt3oX(float x0, float x1, float x2, float x3, float t);
 };
-
 
 #endif /* defined(__ofForest__Sonify__) */

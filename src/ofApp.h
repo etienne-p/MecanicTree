@@ -7,9 +7,6 @@
 #include "RingBuffer.h"
 #include "KonamiCode.h"
 
-using namespace Kinematic;
-using namespace Sonify;
-
 class ofApp : public ofBaseApp{
 
 public:

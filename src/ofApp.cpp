@@ -85,13 +85,8 @@ void ofApp::setupUI(){
     gui->addSlider("VOLUME", 0, 10, audioGenerator->volume);
     
     gui->autoSizeToFitWidgets();
-    
-        
     ofAddListener(gui->newGUIEvent, this, &ofApp::guiEvent);
     gui->loadSettings("settings.xml");
-    
-    
-    //gui->disable();
 }
 
 //--------------------------------------------------------------
@@ -216,8 +211,9 @@ void ofApp::draw(){
 void ofApp::keyPressed(int key){
     if(guiCode.pushKey(key)){
         gui->enable();
+    } else if (key == 32){
+        gui->disable();
     }
-    
 }
 
 //--------------------------------------------------------------

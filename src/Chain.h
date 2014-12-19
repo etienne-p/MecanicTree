@@ -11,8 +11,6 @@
 
 #include "ofMain.h"
 
-namespace Kinematic {
-    
 struct ChainElement {
     float link;
     float joint;
@@ -56,7 +54,5 @@ protected:
     float error;
     int updatesForCurrentIndex;
 };
-    
-}
 
 #endif /* defined(__ofForest__Chain__) */
