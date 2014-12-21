@@ -38,6 +38,8 @@ public:
     void setDOFBaseValue(float baseValue);
     void setDOFDecreaseFactor(float decreaseFactor);
     void setDOF(float baseValue, float decreaseFactor);
+    
+    int countElements();
 };
     
 typedef TreeNode Tree;

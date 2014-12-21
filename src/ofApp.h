@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "Tree.h"
+#include "TreeMesh.h"
 #include "Sonify.h"
 #include "ofxUI.h"
 #include "RingBuffer.h"
@@ -34,6 +35,7 @@ public:
     int kinematicUpdateRate;
     
     Tree * tree;
+    TreeMesh * treeMesh;
     void makeTree();
     void addBranches(TreeNode * tree, float dAngle, int jointCount, float length, int depth);
     

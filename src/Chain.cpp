@@ -60,24 +60,8 @@ void Chain::update(){
     }
     for (int i = 0, len = elements.size(); i < len; i++){
         float dof = elements[i].dof;
-        float joint = elements[i].joint;
-        //elements[i].prevJoint = joint;
-        
-        /*float newJoint = joint + elements[i].velocity;
-         if (newJoint > dof){
-         elements[i].velocity = 0;
-         elements[i].joint = dof;
-         } else if (newJoint < -dof){
-         elements[i].velocity = 0;
-         elements[i].joint = -dof;
-         } else {
-         elements[i].joint = newJoint;
-         elements[i].velocity *= friction;
-         }*/
-        
-        elements[i].joint = fmax(-dof, fmin(joint + elements[i].velocity, dof));
+        elements[i].joint = fmax(-dof, fmin(elements[i].joint + elements[i].velocity, dof));
         elements[i].velocity *= friction;
-        
     }
     updateCartesianPoints();
     bool hitDOF = abs(elements[elementIndex].joint) == elements[elementIndex].dof;

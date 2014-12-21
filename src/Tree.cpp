@@ -104,3 +104,11 @@ void TreeNode::setDOFBaseValue(float baseValue){
 void TreeNode::setDOFDecreaseFactor(float decreaseFactor){
     setDOF(dofBaseValue, decreaseFactor);
 }
+
+int TreeNode::countElements(){
+    int count = elements.size();
+    for (int i = 0, len = childs.size(); i < len; i++){
+        count += childs[i]->countElements();
+    }
+    return count;
+}

@@ -17,10 +17,12 @@ void ofApp::setup(){
     audioGenerator = new AudioGenerator();
     audioGenerator->loadSample(ofToDataPath("fx.wav"));
     
+    treeMesh = new TreeMesh();
+    
     makeTree();
     setupUI();
     
-    soundStream.setup(this, 2, 0, 44100, 256, 4);
+    //soundStream.setup(this, 2, 0, 44100, 256, 4);
     
     vector<int> v;
     v.push_back(103);
@@ -42,13 +44,13 @@ void ofApp::makeTree(){
     float len = rootLength * (float)(rootNodeCount - 1) / (float)rootNodeCount;
     addBranches(tree, branchAngleOffset, rootNodeCount  - parentJointOffset, len, branchDepth);
     
+    treeMesh->setTree(tree);
     audioGenerator->reset(tree);
 }
 
 void ofApp::setupUI(){
     
     gui = new ofxUICanvas();
-    
     
     // APP Parameters (they require a tree rebuild)
     gui->addSpacer();
@@ -194,16 +196,18 @@ void ofApp::addBranches(TreeNode * tree, float dAngle, int jointCount, float len
 //--------------------------------------------------------------
 void ofApp::update(){
     for (int i = 0; i < kinematicUpdateRate; i++) tree->update();
+    treeMesh->update();
     
-    int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
+    /*int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
     float * tmpBuffer = new float[bufferSize];
     audioGenerator->process(tmpBuffer, bufferSize / 2, 2);
     buffer->write(tmpBuffer, bufferSize);
-    delete[] tmpBuffer;
+    delete[] tmpBuffer;*/
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    treeMesh->draw();
     tree->draw();
 }
 
