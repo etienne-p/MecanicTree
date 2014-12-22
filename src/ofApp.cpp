@@ -19,6 +19,23 @@ void ofApp::setup(){
     
     treeMesh = new TreeMesh();
     
+    //light.setDirectional();
+    light.setPointLight();
+    light.setAttenuation(1.0f);
+    ofQuaternion q;
+    q.makeRotate(-90, ofVec3f(0, 1, 0));
+    light.setOrientation(q);
+    light.setPosition(ofVec3f(-200, 200, 200));
+    //light.setDiffuseColor(ofColor(0.0f, 0.0f, 255.0f));
+    //light.setSpecularColor(ofColor(255.0f, 0.0f, 0.0f));
+    
+    materialColor.setBrightness(250.f);
+    materialColor.setSaturation(200);
+    material.setShininess( 64 );
+    
+    ofSetSmoothLighting(true);
+    ofEnableDepthTest();
+    
     makeTree();
     setupUI();
     
@@ -207,7 +224,18 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
+    
+    ofSetColor(light.getDiffuseColor());
+    
+    
+    ofEnableLighting();
+    light.enable();
+    material.begin();
     treeMesh->draw();
+    material.end();
+    light.disable();
+    ofDisableLighting();
+    light.draw();
     tree->draw();
 }
 

@@ -39,6 +39,8 @@ public:
     void makeTree();
     void addBranches(TreeNode * tree, float dAngle, int jointCount, float length, int depth);
     
+    ofLight light;
+    
     ofxUICanvas * gui;
     void setupUI();
     void guiEvent(ofxUIEventArgs &e);
@@ -53,6 +55,9 @@ public:
     RingBuffer<float> * buffer;
     
     KonamiCode guiCode;
+    
+    ofMaterial material;
+    ofColor materialColor;
     
     
 };

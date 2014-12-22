@@ -9,24 +9,27 @@
 #include "TreeMesh.h"
 
 TreeMesh::TreeMesh(){
-    resolution = 4;
+    resolution = 6;
 }
 
 void TreeMesh::setTree(Tree * arg){
     tree = arg;
     vertices.resize(tree->countElements() * verticesPerElement());
+    normals.resize(vertices.size());
     vbo.clear();
     vbo.setVertexData(&vertices[0], vertices.size(), GL_DYNAMIC_DRAW);
+    vbo.setNormalData(&normals[0], normals.size(), GL_DYNAMIC_DRAW);
 }
 
 void TreeMesh::update(){
     verticeIndex = 0;
     updateNode(tree);
     vbo.updateVertexData(&vertices[0], vertices.size());
+    vbo.updateNormalData(&normals[0], normals.size());
 }
 
 void TreeMesh::updateNode(Tree * node){
-    for (int i = 0, len = node->cartesianPoints.size() - 1; i < len; i++){
+    for (int i = 0, len = node->elements.size(); i < len; i++){
         updateTrianglesForElement(node->cartesianPoints[i], node->cartesianPoints[i + 1]);
     }
     for (int i = 0, len = node->childs.size(); i < len; i++){
@@ -40,8 +43,8 @@ void TreeMesh::draw(){
 
 void TreeMesh::updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & segB){
     
-    float ratio = .5f;
-    float radius = 5.0f;
+    float ratio = .1f;
+    float radius = 10.0f;
     
     ofVec3f a = segA;
     ofVec3f b = segB;
@@ -57,18 +60,31 @@ void TreeMesh::updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & s
     vector<ofVec3f> mPts(resolution);
     
     // mid vertex
+    float dAngle = 360.0f / (float)resolution;
     for (int i = 0; i < resolution; i++){
-        rot.makeRotate(i * 360.0f / (float)resolution, s);
-        mPts[i] = m;// + rot * forward;
+        rot.makeRotate(i * dAngle, s);
+        mPts[i].set(m + rot * forward);
     }
     
     for (int i = 0; i < resolution; i++){
+        
         vertices[verticeIndex++].set(a);
+        normals[verticeIndex].set(a - m);
+        
         vertices[verticeIndex++].set(mPts[i]);
-        vertices[verticeIndex++].set(mPts[i + 1]);
+        normals[verticeIndex].set(mPts[i] - m);
+        
+        vertices[verticeIndex++].set(mPts[(i + 1) % resolution]);
+        normals[verticeIndex].set(mPts[(i + 1) % resolution] - m);
+        
         vertices[verticeIndex++].set(b);
+        normals[verticeIndex].set(b - m);
+        
         vertices[verticeIndex++].set(mPts[i]);
-        vertices[verticeIndex++].set(mPts[i + 1]);
+        normals[verticeIndex].set(mPts[i] - m);
+        
+        vertices[verticeIndex++].set(mPts[(i + 1) % resolution]);
+        normals[verticeIndex].set(mPts[(i + 1) % resolution] - m);
     }
 }
 

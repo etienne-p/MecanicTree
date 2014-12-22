@@ -32,6 +32,7 @@ private:
     int resolution;
     int verticeIndex;
     vector<ofVec3f> vertices;
+    vector<ofVec3f> normals;
     ofVbo vbo;
     Tree * tree;
     

@@ -6,22 +6,22 @@
 <Widget>
     <Kind>42</Kind>
     <Name>ROOT_NODE_COUNT</Name>
-    <Value>16</Value>
+    <Value>11</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>ROOT_LENGTH</Name>
-    <Value>554.778320312</Value>
+    <Value>607.093627930</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
     <Name>PARENT_JOINT_OFFSET</Name>
-    <Value>4</Value>
+    <Value>2</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
     <Name>BRANCH_DEPTH</Name>
-    <Value>0</Value>
+    <Value>7</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
