@@ -9,7 +9,7 @@
 #include "TreeMesh.h"
 
 TreeMesh::TreeMesh(){
-    resolution = 6;
+    resolution = 4;
 }
 
 void TreeMesh::setTree(Tree * arg){
@@ -44,7 +44,7 @@ void TreeMesh::draw(){
 void TreeMesh::updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & segB){
     
     float ratio = .1f;
-    float radius = 10.0f;
+    float radius = 20.0f;
     
     ofVec3f a = segA;
     ofVec3f b = segB;

@@ -19,19 +19,12 @@ void ofApp::setup(){
     
     treeMesh = new TreeMesh();
     
-    //light.setDirectional();
     light.setPointLight();
-    light.setAttenuation(1.0f);
-    ofQuaternion q;
-    q.makeRotate(-90, ofVec3f(0, 1, 0));
-    light.setOrientation(q);
-    light.setPosition(ofVec3f(-200, 200, 200));
-    //light.setDiffuseColor(ofColor(0.0f, 0.0f, 255.0f));
-    //light.setSpecularColor(ofColor(255.0f, 0.0f, 0.0f));
-    
-    materialColor.setBrightness(250.f);
-    materialColor.setSaturation(200);
-    material.setShininess( 64 );
+    light.setAttenuation(.5f);
+    light.setPosition(ofVec3f(ofGetWidth() / 2, 0, 100));
+    light.setAmbientColor(ofColor::black);
+    light.setDiffuseColor(ofColor::steelBlue);
+    light.setSpecularColor(ofColor::white);
     
     ofSetSmoothLighting(true);
     ofEnableDepthTest();
@@ -230,9 +223,7 @@ void ofApp::draw(){
     
     ofEnableLighting();
     light.enable();
-    material.begin();
     treeMesh->draw();
-    material.end();
     light.disable();
     ofDisableLighting();
     light.draw();
@@ -276,6 +267,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
+    light.setPosition(ofVec3f(ofGetWidth() / 2, 0, 100));
     tree->base.set(.5f * (float)w, .96f * (float)h);
 }
 

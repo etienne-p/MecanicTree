@@ -55,9 +55,4 @@ public:
     RingBuffer<float> * buffer;
     
     KonamiCode guiCode;
-    
-    ofMaterial material;
-    ofColor materialColor;
-    
-    
 };
