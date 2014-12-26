@@ -10,10 +10,24 @@
 
 TreeMesh::TreeMesh(){
     resolution = 4;
+    depthToRadiusFactor = 1.0f;
 }
 
 void TreeMesh::setTree(Tree * arg){
     tree = arg;
+    resetVbo();
+}
+
+int TreeMesh::getResolution(){
+    return resolution;
+}
+
+void TreeMesh::setResolution(int val){
+    resolution = val;
+    resetVbo();
+}
+
+void TreeMesh::resetVbo(){
     vertices.resize(tree->countElements() * verticesPerElement());
     normals.resize(vertices.size());
     vbo.clear();
@@ -23,17 +37,18 @@ void TreeMesh::setTree(Tree * arg){
 
 void TreeMesh::update(){
     verticeIndex = 0;
-    updateNode(tree);
+    updateNode(tree, 0);
     vbo.updateVertexData(&vertices[0], vertices.size());
     vbo.updateNormalData(&normals[0], normals.size());
 }
 
-void TreeMesh::updateNode(Tree * node){
+void TreeMesh::updateNode(Tree * node, int depth){
+    depth += node->parentJointIndex;
     for (int i = 0, len = node->elements.size(); i < len; i++){
-        updateTrianglesForElement(node->cartesianPoints[i], node->cartesianPoints[i + 1]);
+        updateTrianglesForElement(node->cartesianPoints[i], node->cartesianPoints[i + 1], depth + i);
     }
     for (int i = 0, len = node->childs.size(); i < len; i++){
-        updateNode(node->childs[i]);
+        updateNode(node->childs[i], depth);
     }
 }
 
@@ -41,10 +56,10 @@ void TreeMesh::draw(){
     vbo.draw(GL_TRIANGLES, 0, vertices.size());
 }
 
-void TreeMesh::updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & segB){
+void TreeMesh::updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & segB, int depth){
     
     float ratio = .1f;
-    float radius = 20.0f;
+    float radius = (tree->elements.size() - depth) * depthToRadiusFactor;
     
     ofVec3f a = segA;
     ofVec3f b = segB;

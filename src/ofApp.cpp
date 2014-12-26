@@ -21,18 +21,19 @@ void ofApp::setup(){
     
     light.setPointLight();
     light.setAttenuation(.5f);
-    light.setPosition(ofVec3f(ofGetWidth() / 2, 0, 100));
+    light.setPosition(ofVec3f(ofGetWidth() / 2, 0, 200));
     light.setAmbientColor(ofColor::black);
     light.setDiffuseColor(ofColor::steelBlue);
     light.setSpecularColor(ofColor::white);
     
     ofSetSmoothLighting(true);
-    ofEnableDepthTest();
     
     makeTree();
     setupUI();
     
-    //soundStream.setup(this, 2, 0, 44100, 256, 4);
+    drawDebug = true;
+    
+    soundStream.setup(this, 2, 0, 44100, 256, 4);
     
     vector<int> v;
     v.push_back(103);
@@ -60,7 +61,10 @@ void ofApp::makeTree(){
 
 void ofApp::setupUI(){
     
-    gui = new ofxUICanvas();
+    //gui = new ofxUICanvas();
+    gui = new ofxUIScrollableCanvas(0,0,400,ofGetHeight());
+    gui->setScrollAreaToScreen();
+    gui->setScrollableDirections(false, true);
     
     // APP Parameters (they require a tree rebuild)
     gui->addSpacer();
@@ -96,7 +100,17 @@ void ofApp::setupUI(){
     gui->addSlider("JOINT_PITCH_OFFSET", 0, 4.f, audioGenerator->dJointToPitchOffset);
     gui->addSlider("VOLUME", 0, 10, audioGenerator->volume);
     
+    // Render Parameters
+    gui->addSpacer();
+    gui->addLabel("RENDER");
+    gui->addToggle("DRAW_DEBUG", drawDebug);
+    gui->addSlider("LIGHT_ATTENUATION", 0, 2, light.getAttenuationConstant());
+    gui->addSlider("LIGHT_Z", 0, 1000, light.getPosition().z);
+    gui->addSlider("DEPTH_TO_RADIUS", 0, 12, treeMesh->depthToRadiusFactor);
+    gui->addIntSlider("MESH_RESOLUTION", 3, 36, treeMesh->getResolution());
+    
     gui->autoSizeToFitWidgets();
+    
     ofAddListener(gui->newGUIEvent, this, &ofApp::guiEvent);
     gui->loadSettings("settings.xml");
 }
@@ -177,6 +191,25 @@ void ofApp::guiEvent(ofxUIEventArgs &e){
     else if(name == "VOLUME"){
         audioGenerator->volume = (((ofxUISlider*)e.getSlider())->getScaledValue());
     }
+    
+    // Render Params
+    else if(name == "DRAW_DEBUG"){
+        drawDebug = ((ofxUIToggle*)e.getToggle())->getValue();
+    }
+    else if(name == "LIGHT_ATTENUATION"){
+        light.setAttenuation(((ofxUISlider*)e.getSlider())->getScaledValue());
+    }
+    else if(name == "LIGHT_Z"){
+        ofVec3f pos = light.getPosition();
+        pos.z = ((ofxUISlider*)e.getSlider())->getScaledValue();
+        light.setPosition(pos);
+    }
+    else if(name == "DEPTH_TO_RADIUS"){
+        treeMesh->depthToRadiusFactor = ((ofxUISlider*)e.getSlider())->getScaledValue();
+    }
+    else if(name == "MESH_RESOLUTION"){
+        treeMesh->setResolution(((ofxUIIntSlider*)e.getSlider())->getScaledValue());
+    }
 }
 
 //--------------------------------------------------------------
@@ -208,26 +241,32 @@ void ofApp::update(){
     for (int i = 0; i < kinematicUpdateRate; i++) tree->update();
     treeMesh->update();
     
-    /*int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
+    int bufferSize = (buffer->getWriteAvail() / 2) * 2; // prevent odd length
     float * tmpBuffer = new float[bufferSize];
     audioGenerator->process(tmpBuffer, bufferSize / 2, 2);
     buffer->write(tmpBuffer, bufferSize);
-    delete[] tmpBuffer;*/
+    delete[] tmpBuffer;
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     
+    ofBackground(ofColor::black);
+    
     ofSetColor(light.getDiffuseColor());
     
-    
     ofEnableLighting();
+    ofEnableDepthTest();
     light.enable();
     treeMesh->draw();
     light.disable();
     ofDisableLighting();
-    light.draw();
-    tree->draw();
+    ofDisableDepthTest();
+    
+    if (drawDebug){
+        light.draw();
+        tree->draw();
+    }
 }
 
 //--------------------------------------------------------------

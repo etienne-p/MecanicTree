@@ -22,7 +22,6 @@ Chain::Chain(float offset, int jointCount, float length){
     for (int i = 0; i < jointCount; i++){
         ChainElement elt;
         elt.joint = 0;
-        //elt.prevJoint = elt.joint;
         elt.link = r;
         elements.push_back(elt);
     }

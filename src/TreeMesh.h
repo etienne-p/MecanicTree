@@ -21,14 +21,18 @@ public:
     void setTree(Tree * arg);
     void update();
     void draw();
+    int getResolution();
+    void setResolution(int val);
+    
+    float depthToRadiusFactor;
     
 private:
-    void updateNode(Tree * node);
-    void updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & segB);
+    void resetVbo();
+    void updateNode(Tree * node, int depth);
+    void updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & segB, int depth);
     inline int verticesPerElement(){
         return resolution * 6;
     }
-    
     int resolution;
     int verticeIndex;
     vector<ofVec3f> vertices;

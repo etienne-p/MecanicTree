@@ -41,7 +41,7 @@ public:
     
     ofLight light;
     
-    ofxUICanvas * gui;
+    ofxUIScrollableCanvas * gui;
     void setupUI();
     void guiEvent(ofxUIEventArgs &e);
     
@@ -55,4 +55,5 @@ public:
     RingBuffer<float> * buffer;
     
     KonamiCode guiCode;
+    bool drawDebug;
 };

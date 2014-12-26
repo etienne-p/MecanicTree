@@ -14,7 +14,6 @@
 struct ChainElement {
     float link;
     float joint;
-    //float prevJoint;
     float dof;
     float velocity;
 };

@@ -6,37 +6,37 @@
 <Widget>
     <Kind>42</Kind>
     <Name>ROOT_NODE_COUNT</Name>
-    <Value>11</Value>
+    <Value>16</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>ROOT_LENGTH</Name>
-    <Value>607.093627930</Value>
+    <Value>621.614196777</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
     <Name>PARENT_JOINT_OFFSET</Name>
-    <Value>2</Value>
+    <Value>3</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
     <Name>BRANCH_DEPTH</Name>
-    <Value>7</Value>
+    <Value>2</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BRANCH_ANGLE_OFFSET</Name>
-    <Value>0.437438458</Value>
+    <Value>0.472906411</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_DELTA</Name>
-    <Value>0.463054180</Value>
+    <Value>0.841836751</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>AWAKE_DISTANCE</Name>
-    <Value>88.669952393</Value>
+    <Value>33.673469543</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -46,12 +46,12 @@
 <Widget>
     <Kind>4</Kind>
     <Name>DOF_BASE_VALUE</Name>
-    <Value>1.812807918</Value>
+    <Value>1.379310369</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>DOF_DECREASE_FACTOR</Name>
-    <Value>0.463054180</Value>
+    <Value>0.817734003</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -61,7 +61,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>VOL_INTERP_FACTOR</Name>
-    <Value>0.000871921</Value>
+    <Value>0.000502551</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -71,20 +71,45 @@
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_VOL_FACTOR</Name>
-    <Value>41.379310608</Value>
+    <Value>34.693878174</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_PITCH_FACTOR</Name>
-    <Value>74.876846313</Value>
+    <Value>61.224491119</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_PITCH_OFFSET</Name>
-    <Value>0.413793117</Value>
+    <Value>0.091836736</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>VOLUME</Name>
     <Value>5.369458199</Value>
+</Widget>
+<Widget>
+    <Kind>2</Kind>
+    <Name>DRAW_DEBUG</Name>
+    <Value>0</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>LIGHT_ATTENUATION</Name>
+    <Value>0.454081625</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>LIGHT_Z</Name>
+    <Value>99.489791870</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>DEPTH_TO_RADIUS</Name>
+    <Value>0.795918345</Value>
+</Widget>
+<Widget>
+    <Kind>42</Kind>
+    <Name>MESH_RESOLUTION</Name>
+    <Value>4</Value>
 </Widget>
