@@ -19,11 +19,13 @@ void ofApp::setup(){
     
     treeMesh = new TreeMesh();
     
+    color.set(ofColor::steelBlue);
+    
     light.setPointLight();
     light.setAttenuation(.5f);
     light.setPosition(ofVec3f(ofGetWidth() / 2, 0, 200));
     light.setAmbientColor(ofColor::black);
-    light.setDiffuseColor(ofColor::steelBlue);
+    light.setDiffuseColor(color);
     light.setSpecularColor(ofColor::white);
     
     ofSetSmoothLighting(true);
@@ -107,7 +109,13 @@ void ofApp::setupUI(){
     gui->addSlider("LIGHT_ATTENUATION", 0, 2, light.getAttenuationConstant());
     gui->addSlider("LIGHT_Z", 0, 1000, light.getPosition().z);
     gui->addSlider("DEPTH_TO_RADIUS", 0, 12, treeMesh->depthToRadiusFactor);
+    gui->addSlider("RADIUS_OFFSET", 0, 12, treeMesh->radiusOffset);
     gui->addIntSlider("MESH_RESOLUTION", 3, 36, treeMesh->getResolution());
+    
+    // Color
+    gui->addSlider("COLOR_RED", 0, 255, color.r);
+    gui->addSlider("COLOR_GREEN", 0, 255, color.g);
+    gui->addSlider("COLOR_BLUE", 0, 255, color.b);
     
     gui->autoSizeToFitWidgets();
     
@@ -207,8 +215,23 @@ void ofApp::guiEvent(ofxUIEventArgs &e){
     else if(name == "DEPTH_TO_RADIUS"){
         treeMesh->depthToRadiusFactor = ((ofxUISlider*)e.getSlider())->getScaledValue();
     }
+    else if(name == "RADIUS_OFFSET"){
+        treeMesh->radiusOffset = ((ofxUISlider*)e.getSlider())->getScaledValue();
+    }
     else if(name == "MESH_RESOLUTION"){
         treeMesh->setResolution(((ofxUIIntSlider*)e.getSlider())->getScaledValue());
+    }
+    else if(name == "COLOR_RED"){
+        color.r = ((ofxUISlider*)e.getSlider())->getScaledValue();
+        light.setDiffuseColor(color);
+    }
+    else if(name == "COLOR_GREEN"){
+        color.g = ((ofxUISlider*)e.getSlider())->getScaledValue();
+        light.setDiffuseColor(color);
+    }
+    else if(name == "COLOR_BLUE"){
+        color.b = ((ofxUISlider*)e.getSlider())->getScaledValue();
+        light.setDiffuseColor(color);
     }
 }
 

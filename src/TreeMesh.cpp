@@ -10,6 +10,7 @@
 
 TreeMesh::TreeMesh(){
     resolution = 4;
+    radiusOffset = 0;
     depthToRadiusFactor = 1.0f;
 }
 
@@ -59,7 +60,7 @@ void TreeMesh::draw(){
 void TreeMesh::updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & segB, int depth){
     
     float ratio = .1f;
-    float radius = (tree->elements.size() - depth) * depthToRadiusFactor;
+    float radius = (tree->elements.size() - depth) * depthToRadiusFactor + radiusOffset;
     
     ofVec3f a = segA;
     ofVec3f b = segB;

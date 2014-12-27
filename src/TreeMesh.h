@@ -25,6 +25,7 @@ public:
     void setResolution(int val);
     
     float depthToRadiusFactor;
+    float radiusOffset;
     
 private:
     void resetVbo();

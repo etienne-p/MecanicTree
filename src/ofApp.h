@@ -40,11 +40,11 @@ public:
     void addBranches(TreeNode * tree, float dAngle, int jointCount, float length, int depth);
     
     ofLight light;
+    ofColor color;
     
     ofxUIScrollableCanvas * gui;
     void setupUI();
     void guiEvent(ofxUIEventArgs &e);
-    
     void syncBranchesParamsOnGui();
     
     AudioGenerator * audioGenerator;

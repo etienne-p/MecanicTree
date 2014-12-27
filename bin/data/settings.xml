@@ -26,7 +26,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>BRANCH_ANGLE_OFFSET</Name>
-    <Value>0.472906411</Value>
+    <Value>0.526530623</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -46,7 +46,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>DOF_BASE_VALUE</Name>
-    <Value>1.379310369</Value>
+    <Value>0.545918345</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -96,20 +96,40 @@
 <Widget>
     <Kind>4</Kind>
     <Name>LIGHT_ATTENUATION</Name>
-    <Value>0.454081625</Value>
+    <Value>0.418367356</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>LIGHT_Z</Name>
-    <Value>99.489791870</Value>
+    <Value>0.000000000</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>DEPTH_TO_RADIUS</Name>
-    <Value>0.795918345</Value>
+    <Value>12.000000000</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>RADIUS_OFFSET</Name>
+    <Value>1.193877459</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
     <Name>MESH_RESOLUTION</Name>
     <Value>4</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>COLOR_RED</Name>
+    <Value>83.915817261</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>COLOR_GREEN</Name>
+    <Value>111.887756348</Value>
+</Widget>
+<Widget>
+    <Kind>4</Kind>
+    <Name>COLOR_BLUE</Name>
+    <Value>225.076522827</Value>
 </Widget>
