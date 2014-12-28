@@ -6,7 +6,7 @@
 <Widget>
     <Kind>42</Kind>
     <Name>ROOT_NODE_COUNT</Name>
-    <Value>16</Value>
+    <Value>13</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -16,17 +16,17 @@
 <Widget>
     <Kind>42</Kind>
     <Name>PARENT_JOINT_OFFSET</Name>
-    <Value>3</Value>
+    <Value>2</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
     <Name>BRANCH_DEPTH</Name>
-    <Value>2</Value>
+    <Value>3</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>BRANCH_ANGLE_OFFSET</Name>
-    <Value>0.526530623</Value>
+    <Value>0.593877554</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -36,22 +36,22 @@
 <Widget>
     <Kind>4</Kind>
     <Name>AWAKE_DISTANCE</Name>
-    <Value>33.673469543</Value>
+    <Value>88.775512695</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>FRICTION</Name>
-    <Value>0.980000019</Value>
+    <Value>0.900510192</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>DOF_BASE_VALUE</Name>
-    <Value>0.545918345</Value>
+    <Value>1.821428537</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>DOF_DECREASE_FACTOR</Name>
-    <Value>0.817734003</Value>
+    <Value>0.709183693</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -61,27 +61,27 @@
 <Widget>
     <Kind>4</Kind>
     <Name>VOL_INTERP_FACTOR</Name>
-    <Value>0.000502551</Value>
+    <Value>0.000994898</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>PITCH_INTERP_FACTOR</Name>
-    <Value>0.001000000</Value>
+    <Value>0.000984694</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_VOL_FACTOR</Name>
-    <Value>34.693878174</Value>
+    <Value>33.673469543</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_PITCH_FACTOR</Name>
-    <Value>61.224491119</Value>
+    <Value>195.918365479</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_PITCH_OFFSET</Name>
-    <Value>0.091836736</Value>
+    <Value>0.193877548</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -96,22 +96,22 @@
 <Widget>
     <Kind>4</Kind>
     <Name>LIGHT_ATTENUATION</Name>
-    <Value>0.418367356</Value>
+    <Value>0.336734682</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>LIGHT_Z</Name>
-    <Value>0.000000000</Value>
+    <Value>188.775512695</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>DEPTH_TO_RADIUS</Name>
-    <Value>12.000000000</Value>
+    <Value>0.459183693</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>RADIUS_OFFSET</Name>
-    <Value>1.193877459</Value>
+    <Value>1.653061152</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -121,15 +121,15 @@
 <Widget>
     <Kind>4</Kind>
     <Name>COLOR_RED</Name>
-    <Value>83.915817261</Value>
+    <Value>46.186225891</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>COLOR_GREEN</Name>
-    <Value>111.887756348</Value>
+    <Value>132.053573608</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>COLOR_BLUE</Name>
-    <Value>225.076522827</Value>
+    <Value>212.716842651</Value>
 </Widget>

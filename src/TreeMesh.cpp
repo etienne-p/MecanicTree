@@ -84,23 +84,29 @@ void TreeMesh::updateTrianglesForElement(const ofVec2f & segA, const ofVec2f & s
     
     for (int i = 0; i < resolution; i++){
         
-        vertices[verticeIndex++].set(a);
+        vertices[verticeIndex].set(a);
         normals[verticeIndex].set(a - m);
+        verticeIndex++;
         
-        vertices[verticeIndex++].set(mPts[i]);
+        vertices[verticeIndex].set(mPts[i]);
         normals[verticeIndex].set(mPts[i] - m);
+        verticeIndex++;
         
-        vertices[verticeIndex++].set(mPts[(i + 1) % resolution]);
+        vertices[verticeIndex].set(mPts[(i + 1) % resolution]);
         normals[verticeIndex].set(mPts[(i + 1) % resolution] - m);
+        verticeIndex++;
         
-        vertices[verticeIndex++].set(b);
+        vertices[verticeIndex].set(b);
         normals[verticeIndex].set(b - m);
+        verticeIndex++;
         
-        vertices[verticeIndex++].set(mPts[i]);
+        vertices[verticeIndex].set(mPts[i]);
         normals[verticeIndex].set(mPts[i] - m);
+        verticeIndex++;
         
-        vertices[verticeIndex++].set(mPts[(i + 1) % resolution]);
+        vertices[verticeIndex].set(mPts[(i + 1) % resolution]);
         normals[verticeIndex].set(mPts[(i + 1) % resolution] - m);
+        verticeIndex++;
     }
 }
 

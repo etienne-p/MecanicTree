@@ -6,6 +6,7 @@
 void ofApp::setup(){
     
     tree = NULL;
+    drawDebug = true;
     rootNodeCount = 12;
     rootLength = 600.f;
     parentJointOffset = 2;
@@ -32,8 +33,6 @@ void ofApp::setup(){
     
     makeTree();
     setupUI();
-    
-    drawDebug = true;
     
     soundStream.setup(this, 2, 0, 44100, 256, 4);
     
@@ -329,7 +328,9 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-    light.setPosition(ofVec3f(ofGetWidth() / 2, 0, 100));
+    ofVec3f pos = light.getPosition();
+    pos.x = ofGetWidth() * .5f;
+    light.setPosition(pos);
     tree->base.set(.5f * (float)w, .96f * (float)h);
 }
 
