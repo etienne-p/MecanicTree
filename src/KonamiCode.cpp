@@ -8,9 +8,7 @@
 
 #include "KonamiCode.h"
 
-KonamiCode::KonamiCode(){
-
-}
+KonamiCode::KonamiCode(){}
 
 void KonamiCode::setCode(const vector<int> & value){
     code = value;

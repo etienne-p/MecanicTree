@@ -18,13 +18,7 @@ AudioGenerator::AudioGenerator(){
     dJointToVolumeFactor = 50;
     dJointToPitchFactor = 50;
     dJointToPitchOffset = .8f;
-    volume = 1;    }
-
-AudioGenerator::~AudioGenerator(){
-}
-
-void AudioGenerator::clearSources(){
-    sources.clear();
+    volume = 1;
 }
 
 bool AudioGenerator::loadSample(string path){
@@ -52,7 +46,7 @@ bool AudioGenerator::loadSample(string path){
 }
 
 void AudioGenerator::reset(Tree * tree){
-    if (sources.size() > 0) clearSources();
+    sources.clear();
     addSources(tree);
 }
 

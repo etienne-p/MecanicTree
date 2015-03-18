@@ -46,11 +46,7 @@ void ofApp::setup(){
 
 void ofApp::makeTree(){
     
-    if (tree != NULL) {
-        audioGenerator->clearSources();
-        delete tree;
-    }
-    
+    if (tree != NULL) delete tree;
     tree = new Tree(0, rootNodeCount, rootLength);
     tree->base.set(.5f * ofGetWidth(), .96f * ofGetHeight());
     float len = rootLength * (float)(rootNodeCount - 1) / (float)rootNodeCount;

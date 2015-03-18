@@ -6,12 +6,12 @@
 <Widget>
     <Kind>42</Kind>
     <Name>ROOT_NODE_COUNT</Name>
-    <Value>13</Value>
+    <Value>15</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>ROOT_LENGTH</Name>
-    <Value>621.614196777</Value>
+    <Value>697.295959473</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -21,7 +21,7 @@
 <Widget>
     <Kind>42</Kind>
     <Name>BRANCH_DEPTH</Name>
-    <Value>3</Value>
+    <Value>5</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -36,7 +36,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>AWAKE_DISTANCE</Name>
-    <Value>88.775512695</Value>
+    <Value>110.204086304</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -51,7 +51,7 @@
 <Widget>
     <Kind>4</Kind>
     <Name>DOF_DECREASE_FACTOR</Name>
-    <Value>0.709183693</Value>
+    <Value>0.658163249</Value>
 </Widget>
 <Widget>
     <Kind>42</Kind>
@@ -71,22 +71,22 @@
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_VOL_FACTOR</Name>
-    <Value>33.673469543</Value>
+    <Value>88.775512695</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_PITCH_FACTOR</Name>
-    <Value>195.918365479</Value>
+    <Value>106.122444153</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>JOINT_PITCH_OFFSET</Name>
-    <Value>0.193877548</Value>
+    <Value>0.163265303</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>VOLUME</Name>
-    <Value>5.369458199</Value>
+    <Value>5.382652760</Value>
 </Widget>
 <Widget>
     <Kind>2</Kind>
@@ -96,12 +96,12 @@
 <Widget>
     <Kind>4</Kind>
     <Name>LIGHT_ATTENUATION</Name>
-    <Value>0.336734682</Value>
+    <Value>0.346938789</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>LIGHT_Z</Name>
-    <Value>188.775512695</Value>
+    <Value>61.224491119</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
@@ -116,20 +116,20 @@
 <Widget>
     <Kind>42</Kind>
     <Name>MESH_RESOLUTION</Name>
-    <Value>4</Value>
+    <Value>9</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>COLOR_RED</Name>
-    <Value>46.186225891</Value>
+    <Value>16.913265228</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>COLOR_GREEN</Name>
-    <Value>132.053573608</Value>
+    <Value>130.102035522</Value>
 </Widget>
 <Widget>
     <Kind>4</Kind>
     <Name>COLOR_BLUE</Name>
-    <Value>212.716842651</Value>
+    <Value>255.000000000</Value>
 </Widget>

@@ -36,9 +36,7 @@ public:
     float dJointToPitchOffset;
     
     AudioGenerator();
-    ~AudioGenerator();
     bool loadSample(string path);
-    void clearSources();
     void reset(Tree * tree);
     void addSources(Tree * tree);
     void process(float * output, int bufferSize, int nChannels);
